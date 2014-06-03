@@ -21,7 +21,7 @@
   <tbody>
     <% @recipes.each do |recipe| %>
       <tr style="font-size: 0.9em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
-        <td><%= link_to recipe.name, recipe %></td>
+        <td><%= image_tag "icons/document-task.png" %><%= link_to recipe.name, recipe %></td>
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
