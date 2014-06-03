@@ -25,5 +25,7 @@
   <%= @recipe.filename %>
 </p>
 
+<%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
+
 <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
 <%= link_to 'Back', recipes_path %>
