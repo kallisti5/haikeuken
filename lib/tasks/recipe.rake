@@ -60,7 +60,7 @@ namespace :recipe do
         lint_result = {
             :recipe_id => recipe[:id],
             :clean => status.to_i == 0 ? TRUE : FALSE,
-            :result => stdout.read.strip
+            :result => stdout.read.strip.gsub(/\n/, '<br>')
         }
 		@new_entry = Lint.new(lint_result)
 		@new_entry.save

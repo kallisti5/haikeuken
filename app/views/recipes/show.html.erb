@@ -25,7 +25,13 @@
   <%= @recipe.filename %>
 </p>
 
+<h2>Current Recipe</h2>
 <%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
+
+<h2>Lint Results</h2>
+<div class="CodeRay">
+<%=raw @recipe.lint[:result] %>
+</div>
 
 <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
 <%= link_to 'Back', recipes_path %>

@@ -8,8 +8,8 @@
 		<th>Category</th>
 		<th width="128px">Version</th>
 		<th width="32px">Rev.</th>
-		<!--
 		<th>Lint</th>
+		<!--
 		<th width="68px">x86</th>
 		<th width="68px">x86_gcc2</th>
 		<th width="68px">x86_64</th>
@@ -25,6 +25,7 @@
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
+		<td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
       </tr>
     <% end %>
   </tbody>
