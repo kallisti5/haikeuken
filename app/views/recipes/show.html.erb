@@ -1,37 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @recipe.name %>
-</p>
-
-<p>
-  <strong>Version:</strong>
-  <%= @recipe.version %>
-</p>
-
-<p>
-  <strong>Revision:</strong>
-  <%= @recipe.revision %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @recipe.category %>
-</p>
-
-<p>
-  <strong>Filename:</strong>
-  <%= @recipe.filename %>
-</p>
-
-<h2>Current Recipe</h2>
-<%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
-
-<h2>Lint Results</h2>
-<div class="CodeRay">
-<%=raw @recipe.lint[:result] %>
+<div class="title">
+  <span id="major"><%=@recipe.name %></span><br/>
+  <span id="minor"><%= @recipe.version %> (revision <%= @recipe.revision %>)</span>
 </div>
 
-<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-<%= link_to 'Back', recipes_path %>
+<div class="subtitle">
+  <span id="major">Information</span><br/>
+</div>
+<div class="CodeRay">
+<div style="padding: 10px;">
+  <strong>Category:</strong>
+  <%= @recipe.category %><br/>
+  <strong>Filename:</strong>
+  <%= @recipe.filename %><br/>
+  <strong>Lint:</strong>
+  <%=raw @recipe.lint[:clean] ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+</div>
+</div>
+
+<div class="subtitle">
+  <span id="major">Current Recipe</span><br/>
+</div>
+<%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
+
+<div class="subtitle">
+  <span id="major">Lint Results</span><br/>
+</div>
+<div class="CodeRay">
+<div style="padding: 10px;">
+<%=raw @recipe.lint[:result] %>
+</div>
+</div>

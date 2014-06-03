@@ -1,7 +1,11 @@
-<h1>Listing recipes</h1>
+<div class="title">
+  <h2>Recipes</h2>
+  <p>This is a complete listing of recipes known to the Haiku package build system</p>
+</div>
+
 
 <center>
-<table style="border: 1px solid black" width="70%">
+<table style="border: 1px solid black; width: 100%">
   <thead>
 	<tr bgcolor="#aaa" style="font-size: 0.8em;">
 		<th>Name</th>
@@ -25,7 +29,7 @@
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
-		<td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
+        <td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
       </tr>
     <% end %>
   </tbody>

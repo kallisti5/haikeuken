@@ -1,14 +1,39 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-  <title>Hpbs</title>
+<title>Haiku Package Build System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
 </head>
+
 <body>
+<div id="header" class="container">
+    <div id="logo">
+        <h1><a href="#">HPBS</a></h1>
+    </div>
+    <div id="menu">
+        <ul>
+            <li class="active"><%= link_to 'Recipes', recipes_path %></li>
+            <li><a href="#" accesskey="3" title="">Builds</a></li>
+        </ul>
+    </div>
+</div>
 
-<%= yield %>
+<div id="page">
+    <div class="container">
+    <%= yield %>
+    </div>
+</div>
 
+<div id="copyright" class="container">
+    <p>&copy; Alexander von Gluck IV. All rights reserved.</p>
+</div>
 </body>
 </html>
