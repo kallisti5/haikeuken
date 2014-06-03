@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Clean:</strong>
+  <%= @lint.clean %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @lint.result %>
+</p>
+
+<%= link_to 'Edit', edit_lint_path(@lint) %> |
+<%= link_to 'Back', lints_path %>

@@ -82,4 +82,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.haikuports = '/srv/repos/haikuports'
+  config.haikuporter = '/srv/repos/haikuporter/haikuporter'
+  config.haikuporter_conf = '/srv/repos/haikuporter/haikuports.conf'
 end

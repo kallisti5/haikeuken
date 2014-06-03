@@ -1,0 +1,2 @@
+module LintsHelper
+end

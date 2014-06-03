@@ -29,6 +29,9 @@ gem 'spring',        group: :development
 # Syntax highlighting of recipe files
 gem 'coderay'
 
+# For executing haikuporter
+gem 'open4'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
