@@ -19,8 +19,8 @@
     </div>
     <div id="menu">
         <ul>
-            <li class="active"><%= link_to 'Recipes', recipes_path %></li>
-            <li><a href="#" accesskey="3" title="">Builds</a></li>
+            <li <%= params[:controller] == 'recipes' ? "class=active" : nil %>><%= link_to "Recipes", :recipes %>
+            <li <%= params[:controller] == 'repos' ? "class=active" : nil %>><%= link_to "Repos", :repos %>
         </ul>
     </div>
 </div>
