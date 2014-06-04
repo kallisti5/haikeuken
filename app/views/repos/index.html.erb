@@ -1,0 +1,31 @@
+<div class="title">
+  <h2>Repositories</h2>
+  <p>This is a listing of package repositories known to the Haiku package build system</p>
+</div>
+
+<table style="border: 1px solid black; width: 100%; border-spacing: 0px;">
+  <thead>
+      <tr bgcolor="#aaa" style="font-size: 0.8em; text-align: left;">
+      <th>Name</th>
+      <th>Url</th>
+      <th>Lastrefresh</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @repos.each do |repo| %>
+      <tr style="font-size: 0.9em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+        <td><%= link_to repo.name, repo %></td>
+        <td><%= repo.url %></td>
+        <td><%= repo.lastrefresh %></td>
+        <td><%= link_to 'Edit', edit_repo_path(repo) %></td>
+        <td><%= link_to 'Destroy', repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Repo', new_repo_path %>

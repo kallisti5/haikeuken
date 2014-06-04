@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :repos
+
   resources :lints
 
   resources :recipes
