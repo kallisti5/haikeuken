@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   resources :repos
 
-  resources :lints
-
   resources :recipes
 
   # The priority is based upon order of creation: first created -> highest priority.
