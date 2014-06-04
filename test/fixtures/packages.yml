@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipe_id: 1
+  repo_id: 1
+  architecture_id: 1
+  latestrev: 1
+  path: MyString
+
+two:
+  recipe_id: 1
+  repo_id: 1
+  architecture_id: 1
+  latestrev: 1
+  path: MyString

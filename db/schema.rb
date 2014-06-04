@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604135714) do
+ActiveRecord::Schema.define(version: 20140604184611) do
+
+  create_table "architectures", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lints", force: true do |t|
     t.boolean  "clean"
@@ -19,6 +25,16 @@ ActiveRecord::Schema.define(version: 20140604135714) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "recipe_id"
+  end
+
+  create_table "packages", force: true do |t|
+    t.integer  "recipe_id"
+    t.integer  "repo_id"
+    t.integer  "architecture_id"
+    t.integer  "latestrev"
+    t.string   "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "recipes", force: true do |t|

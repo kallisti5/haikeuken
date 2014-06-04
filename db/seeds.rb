@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Architecture.create([{ name: 'x86' }, { name: 'x86_64' }, { name: 'x86_gcc2' }])

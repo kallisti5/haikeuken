@@ -8,3 +8,17 @@ recipe lint results
 === Requirements
 
 * TODO
+
+
+=== Important commands
+
+* rake db:reset
+  Empty the database
+* rake db:migrate
+  Create the database
+* rake db:seed
+  Populate some basic data to get started
+* rake recipe:lint
+  Performs a lint scan of the current recipes
+* rake recipe:sync
+  Syncs the applications database of recipes with haikuports

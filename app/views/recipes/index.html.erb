@@ -13,11 +13,9 @@
 		<th width="128px">Version</th>
 		<th width="32px">Rev.</th>
 		<th>Lint</th>
-		<th width="68px">x86</th>
-		<th width="68px">x86_gcc2</th>
-		<th width="68px">x86_64</th>
-		<th width="68px">arm</th>
-		<th width="68px">ppc</th>
+		<% @architectures.each do |arch| %>
+			<th width="68px"><%= arch[:name] %></th>
+		<% end %>
   </thead>
 
   <tbody>
@@ -28,11 +26,9 @@
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
         <td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
-        <td><%= image_tag "icons/box-missing.png" %></td>
-        <td><%= image_tag "icons/box-missing.png" %></td>
-        <td><%= image_tag "icons/box-missing.png" %></td>
-        <td><%= image_tag "icons/box-missing.png" %></td>
-        <td><%= image_tag "icons/box-missing.png" %></td>
+		<% @architectures.each do |arch| %>
+        	<td><%= image_tag "icons/box-missing.png" %></td>
+		<% end %>
       </tr>
     <% end %>
   </tbody>
