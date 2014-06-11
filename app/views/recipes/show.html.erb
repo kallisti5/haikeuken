@@ -56,6 +56,29 @@
 </div>
 
 <div class="subtitle">
+  <span id="major">Builds Results</span><br/>
+</div>
+<table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
+	<thead>
+		<tr bgcolor="#ccc" style="font-size: 0.8em;">
+			<td>Build</td><td>Builder</td><td>Architecture</td><td>Start date</td><td>End date</td><td>Result</td>
+		</tr>
+	</thead>
+	<tbody>
+	<% @recipe.builds.each do | build | %>
+	<tr bgcolor="<%= cycle('#f2f2f2', '#fff') -%>">
+		<td><%= link_to "##{build['id']}", build %></td>
+		<td><%= link_to build.builder['hostname'], build.builder %></td>
+		<td><%= build.architecture['name'] %></td>
+		<td><%= build['issued'] %></td>
+		<td><%= build['completed'] %></td>
+		<td><%= build['result'] %></td>
+	</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<div class="subtitle">
   <span id="major">Current Recipe</span><br/>
 </div>
 <%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
@@ -66,5 +89,8 @@
 <div class="CodeRay">
 <div style="padding: 10px;">
 <%=raw @recipe.lint[:result] %>
+</div>
+</div>
+
 </div>
 </div>
