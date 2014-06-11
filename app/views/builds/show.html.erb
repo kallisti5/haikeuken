@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Architecture:</strong>
+  <%= @build.architecture_id %>
+</p>
+
+<p>
+  <strong>Builder:</strong>
+  <%= @build.builder_id %>
+</p>
+
+<p>
+  <strong>Recipe:</strong>
+  <%= @build.recipe_id %>
+</p>
+
+<p>
+  <strong>Issued:</strong>
+  <%= @build.issued %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @build.completed %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @build.result %>
+</p>
+
+<%= link_to 'Edit', edit_build_path(@build) %> |
+<%= link_to 'Back', builds_path %>

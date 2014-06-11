@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611162605) do
+ActiveRecord::Schema.define(version: 20140611202034) do
 
   create_table "architectures", force: true do |t|
     t.string   "name"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20140611162605) do
     t.string   "location"
     t.datetime "lastheard"
     t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "builds", force: true do |t|
+    t.integer  "architecture_id"
+    t.integer  "builder_id"
+    t.integer  "recipe_id"
+    t.datetime "issued"
+    t.datetime "completed"
+    t.text     "result"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

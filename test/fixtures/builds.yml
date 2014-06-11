@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  architecture_id: 1
+  builder_id: 1
+  recipe_id: 1
+  issued: 2014-06-11 20:20:34
+  completed: 2014-06-11 20:20:34
+  result: MyText
+
+two:
+  architecture_id: 1
+  builder_id: 1
+  recipe_id: 1
+  issued: 2014-06-11 20:20:34
+  completed: 2014-06-11 20:20:34
+  result: MyText
