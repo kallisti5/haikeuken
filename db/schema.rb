@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604184611) do
+ActiveRecord::Schema.define(version: 20140611162605) do
 
   create_table "architectures", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "builders", force: true do |t|
+    t.integer  "architecture_id"
+    t.string   "hostname"
+    t.string   "owner"
+    t.string   "location"
+    t.datetime "lastheard"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

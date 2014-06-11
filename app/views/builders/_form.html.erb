@@ -1,0 +1,41 @@
+<%= form_for(@builder) do |f| %>
+  <% if @builder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@builder.errors.count, "error") %> prohibited this builder from being saved:</h2>
+
+      <ul>
+      <% @builder.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :architecture_id %><br>
+    <%= f.number_field :architecture_id %>
+  </div>
+  <div class="field">
+    <%= f.label :hostname %><br>
+    <%= f.text_field :hostname %>
+  </div>
+  <div class="field">
+    <%= f.label :owner %><br>
+    <%= f.text_field :owner %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :lastheard %><br>
+    <%= f.datetime_select :lastheard %>
+  </div>
+  <div class="field">
+    <%= f.label :token %><br>
+    <%= f.text_field :token %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

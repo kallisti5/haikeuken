@@ -1,0 +1,35 @@
+<h1>Listing builders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Architecture</th>
+      <th>Hostname</th>
+      <th>Owner</th>
+      <th>Location</th>
+      <th>Lastheard</th>
+      <th>Token</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @builders.each do |builder| %>
+      <tr>
+        <td><%= builder.architecture_id %></td>
+        <td><%= builder.hostname %></td>
+        <td><%= builder.owner %></td>
+        <td><%= builder.location %></td>
+        <td><%= builder.lastheard %></td>
+        <td><%= builder.token %></td>
+        <td><%= link_to 'Show', builder %></td>
+        <td><%= link_to 'Edit', edit_builder_path(builder) %></td>
+        <td><%= link_to 'Destroy', builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Builder', new_builder_path %>

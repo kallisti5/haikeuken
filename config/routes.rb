@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :builders
+
   resources :repos
 
   resources :recipes

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Architecture:</strong>
+  <%= @builder.architecture_id %>
+</p>
+
+<p>
+  <strong>Hostname:</strong>
+  <%= @builder.hostname %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @builder.owner %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @builder.location %>
+</p>
+
+<p>
+  <strong>Lastheard:</strong>
+  <%= @builder.lastheard %>
+</p>
+
+<p>
+  <strong>Token:</strong>
+  <%= @builder.token %>
+</p>
+
+<%= link_to 'Edit', edit_builder_path(@builder) %> |
+<%= link_to 'Back', builders_path %>
