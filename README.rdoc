@@ -18,7 +18,14 @@ recipe lint results
   Create the database
 * rake db:seed
   Populate some basic data to get started
+
+==== Automated jobs
+
+You will like want to automate these rake tasks to keep current data
+
 * rake recipe:lint
   Performs a lint scan of the current recipes
 * rake recipe:sync
-  Syncs the applications database of recipes with haikuports
+  Syncs the database of recipes with haikuports
+* rake package:sync
+  Syncs the database of known packages with the known repos

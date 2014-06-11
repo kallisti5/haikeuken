@@ -30,14 +30,14 @@
 	<thead>
 		<tr bgcolor="#aaa" style="font-size: 0.8em; text-align: center;">
 			<% @architectures.each do |arch| %>
-				<td><b><%= arch.name %></b></td>
+				<td bgcolor="<%= cycle('#ccc', '#ddd') -%>"><b><%= arch.name %></b></td>
 			<% end %>
 		</tr>
 	</thead>
 	<tbody>
 		<tr style="font-size: 0.9em; text-align: center;" bgcolor="<%= cycle('#eee', '#fff') -%>">
 			<% @recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
-				<td bgcolor="<%= cycle('#eee', '#fff') -%>">
+				<td bgcolor="<%= cycle('#F2F2F2', '#fff') -%>">
 				<% if package.latestrev == 0 %>
 					<%= image_tag "icons/box-missing.png" %>
 				<% elsif package.latestrev == @recipe.revision %>
