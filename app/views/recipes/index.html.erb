@@ -32,12 +32,13 @@
 			<% end %>
 		<% else %>
 			<% recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
+			<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
 				<% if package.latestrev == 0 %>
 					<td><%= image_tag "icons/box-missing.png" %></td>
 				<% elsif package.latestrev == recipe.revision %>
-					<td><%= image_tag "icons/box-exists.png" %></td>
+					<td><%= link_to image_tag("icons/box-exists.png"), "#{package.repo['url']}/hpkg/#{hpkgname}" %></td>
 				<% else %>
-					<td><%= image_tag "icons/box-outdated.png" %></td>
+					<td><%= link_to image_tag("icons/box-outdated.png"), "#{package.repo['url']}/hpkg/#{hpkgname}" %></td>
 				<% end %>
 			<% end %>
 		<% end %>
