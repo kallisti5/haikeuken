@@ -32,5 +32,11 @@
 <%=raw @recipe.lint[:result] %>
 </div>
 </div>
-<%= debug @packages %>
-<%= debug @repos %>
+
+<div class="subtitle">
+  <span id="major">Packages</span><br/>
+</div>
+
+<% @recipe.packages.each do |package| %>
+<%=debug package%>
+<%-end-%>

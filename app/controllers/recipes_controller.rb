@@ -11,8 +11,7 @@ class RecipesController < ApplicationController
   # GET /recipes/1
   # GET /recipes/1.json
   def show
-    @packages = Package.find_by recipe_id: params[:id]
-    @repos = Repo.all
+    @architectures = Architecture.all
   end
 
   private
