@@ -1,4 +1,4 @@
 class Builder < ActiveRecord::Base
   has_many :builds
-  has_one :architecture
+  belongs_to :architecture
 end
