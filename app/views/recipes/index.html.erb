@@ -13,7 +13,7 @@
 		<th width="128px">Version</th>
 		<th width="32px">Rev.</th>
 		<th>Lint</th>
-		<% @architectures.each do |arch| %>
+		<% @architectures.order('architectures.name').each do |arch| %>
 			<th width="68px"><%= arch[:name] %></th>
 		<% end %>
   </thead>
@@ -26,8 +26,20 @@
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
         <td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
-		<% @architectures.each do |arch| %>
-        	<td><%= image_tag "icons/box-missing.png" %></td>
+		<% if recipe.packages.count < @architectures.count %>
+			<% @architectures.each do |arch| %>
+				<td><%= image_tag "icons/working-bar.gif" %></td>
+			<% end %>
+		<% else %>
+			<% recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
+				<% if package.latestrev == 0 %>
+					<td><%= image_tag "icons/box-missing.png" %></td>
+				<% elsif package.latestrev == recipe.revision %>
+					<td><%= image_tag "icons/box-exists.png" %></td>
+				<% else %>
+					<td><%= image_tag "icons/box-outdated.png" %></td>
+				<% end %>
+			<% end %>
 		<% end %>
       </tr>
     <% end %>
