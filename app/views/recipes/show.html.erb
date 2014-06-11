@@ -5,17 +5,52 @@
   <span id="minor"><%= @recipe.version %> (revision <%= @recipe.revision %>)</span>
 </div>
 
-<div class="subtitle">
-  <span id="major">Information</span><br/>
-</div>
-<div class="CodeRay">
-<div style="padding: 10px;">
-  <strong>Category:</strong>
-  <%= @recipe.category %><br/>
-  <strong>Filename:</strong>
-  <%= @recipe.filename %><br/>
-  <strong>Lint:</strong>
-  <%=raw @recipe.lint[:clean] ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+<div style="width: 100%; display: inline-block;">
+  <div style="float: left; width: 70%; padding-right: 5px">
+    <div class="subtitle">
+      <span id="major">Information</span><br/>
+    </div>
+    <div class="CodeRay">
+      <div style="padding: 10px;">
+        <strong>Category:</strong>
+        <%= @recipe.category %><br/>
+        <strong>Filename:</strong>
+        <%= @recipe.filename %><br/>
+        <strong>Lint:</strong>
+        <%=raw @recipe.lint[:clean] ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+      </div>
+    </div>
+  </div>
+
+  <div style='float: right; width: 29%'>
+    <div class="subtitle">
+      <span id="major">Packages</span><br/>
+    </div>
+  <table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
+	<thead>
+		<tr bgcolor="#aaa" style="font-size: 0.8em; text-align: center;">
+			<% @architectures.each do |arch| %>
+				<td><b><%= arch.name %></b></td>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="font-size: 0.9em; text-align: center;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+			<% @recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
+				<td bgcolor="<%= cycle('#eee', '#fff') -%>">
+				<% if package.latestrev == 0 %>
+					<%= image_tag "icons/box-missing.png" %>
+				<% elsif package.latestrev == @recipe.revision %>
+					<%= image_tag "icons/box-exists.png" %>
+				<% else %>
+					<%= image_tag "icons/box-outdated.png" %>
+                <% end %>
+				<br/>Revision <%= package.latestrev %>
+				</td>
+			<%-end-%>
+		</tr>
+	</tbody>
+</table>
 </div>
 </div>
 
@@ -32,11 +67,3 @@
 <%=raw @recipe.lint[:result] %>
 </div>
 </div>
-
-<div class="subtitle">
-  <span id="major">Packages</span><br/>
-</div>
-
-<% @recipe.packages.each do |package| %>
-<%=debug package%>
-<%-end-%>
