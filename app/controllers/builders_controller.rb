@@ -1,5 +1,6 @@
 class BuildersController < ApplicationController
   before_action :set_builder, only: [:show, :edit, :update, :destroy]
+  before_action :set_builder_byhost, only: [:getwork]
 
   # GET /builders
   # GET /builders.json
@@ -19,6 +20,38 @@ class BuildersController < ApplicationController
 
   # GET /builders/1/edit
   def edit
+  end
+
+  # GET /builders/hostname/getwork
+  def getwork
+    if !@builder or params[:token] != @builder['token']
+      # Invalid builder or token, redirect to root
+      redirect_to "/", notice: 'Invalid builder API call!'
+      return
+    end
+
+    workitems = []
+    recipes = Recipe.all
+	recipes.each do | recipe |
+      recipe.packages.each do | package |
+        if package.architecture != @builder.architecture
+          # not the builders architecture
+          next
+        end
+        if package.latestrev < recipe.revision
+          # last seen built revision is outdated
+          # add work to tasks
+          task = {
+            :name => recipe[:name],
+            :version => recipe[:version],
+            :revision => recipe[:revision],
+            :architecture => @builder.architecture[:name]
+          }
+          workitems.push(task)
+        end
+	  end
+    end
+    render json: workitems
   end
 
   # POST /builders
@@ -66,6 +99,12 @@ class BuildersController < ApplicationController
     def set_builder
       @builder = Builder.find(params[:id])
     end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_builder_byhost
+      @builder = Builder.find_by(hostname: params[:hostname])
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def builder_params
