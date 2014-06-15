@@ -51,7 +51,10 @@ class BuildersController < ApplicationController
         end
 	  end
     end
-    render json: workitems
+
+	# Fow now we push back a single work item.  We could push back
+	# several, but these are early days... KISS
+    render json: workitems[rand(0..workitems.count)]
   end
 
   # POST /builders
