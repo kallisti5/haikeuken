@@ -1,0 +1,8 @@
+general:
+  hostname: macmini32
+  token: ewrtew345435643ydrsfy
+  work_path: /boot/home/hpbs
+  threads: 1
+
+server:
+  url: http://haikungfu.net:3000
