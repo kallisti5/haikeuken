@@ -1,6 +1,7 @@
 #!/bin/ruby
 
 @version = "0.1"
+@rest_period = 5.0
 
 ##########################################
 # Requirements
@@ -16,7 +17,7 @@ settings_dir = `finddir B_USER_SETTINGS_DIRECTORY`.delete!("\n")
 @settings = YAML::load_file("#{settings_dir}/hpbs.yml")
 @remote_uri = "#{@settings['server']['url']}/builders/#{@settings['general']['hostname']}"
 
-puts @settings.inspect
+#puts @settings.inspect
 
 def getwork()
 	uri = URI("#{@remote_uri}/getwork?token=#{@settings['general']['token']}")
@@ -63,15 +64,27 @@ def loop()
 	refrepo()
 
 	puts "+ Checking for new work..."
+
 	work = getwork()
 
-	# Just print out each task for now
-	work.each do | task |
-		puts "#{task['name']}-#{task['version']}-#{task['revision']}"
+	# The server could also return a list of tasks,
+	# and we could do work.each. For now we just
+	# do one task.
+
+	task = work
+
+	if task == nil
+		puts "- No work available"
+		return 0
 	end
+	
+	puts "+ Work received"
+	puts "+ Building #{task['name']}-#{task['version']}-#{task['revision']}"
+
 end
 
 puts "Haiku Package Build System Client #{@version}"
+puts "  Server: #{@settings['server']['url']}"
 puts "  Threads: #{@settings['general']['threads']}"
 puts "  Work Path: #{@settings['general']['work_path']}"
 puts ""
@@ -83,4 +96,8 @@ if ! Dir.exists?(@settings['general']['work_path'])
 end
 Dir.chdir(@settings['general']['work_path'])
 	
-loop()
+while(1)
+	loop()
+	puts "+ Resting for #{@rest_period} seconds..."
+	sleep(@rest_period)
+end
