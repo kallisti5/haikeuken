@@ -11,16 +11,16 @@ namespace :package do
 		repositories = Repo.all
 
 		repositories.each do |repo|
+			url = URI.parse(repo[:url])
 			puts repo[:name] + "..."
 			recipes.each do |recipe|
 				architectures.each do |arch|
-					# TODO: repo.url - parse each repo url.
 					rev = recipe['revision'].to_i
-					path = "/haikuports/master/repo/#{arch['name']}/current/packages"
+					path = "#{url.path}/#{arch['name']}/current/packages"
 					while rev.to_i > 0
 						hpkgname = "#{recipe['name']}-#{recipe['version']}-#{rev}-#{arch['name']}.hpkg"
-						puts hpkgname
-						response = Net::HTTP.start('packages.haiku-os.org', 80) do |http|
+						puts "#{path}/#{hpkgname}"
+						response = Net::HTTP.start(url.host, url.port) do |http|
 							http.request_head("#{path}/#{hpkgname}")
 						end
 						break if response.code.to_i == 200

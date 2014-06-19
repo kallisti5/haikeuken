@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Architecture.create([{ name: 'x86' }, { name: 'x86_64' }, { name: 'x86_gcc2' }])
+Repo.create([{ name: 'Haikuports', url: 'https://packages.haiku-os.org/haikuports/master/repo/' }])

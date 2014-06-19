@@ -29,3 +29,20 @@ You will like want to automate these rake tasks to keep current data
   Syncs the database of recipes with haikuports
 * rake package:sync
   Syncs the database of known packages with the known repos
+
+
+=== Installation
+
+* Prepare a database, and configure hpbs for it by adjusting
+  the config/database.yml file
+* Execute 'bundle install' to install the needed gems
+* Perform a rake db:migrate to create and seed the database
+* Modify your config/environments/*.rb environment to match the location
+  of your haikuports repo and haikuporter repo
+* Start the server using 'rails server' or by launching it through unicorn
+* Perform a rake recipe:sync to pull all of the recipes into the database
+* Perform a rake recipe:lint to perform a haikuporter lint on each recipe
+* Configure remote repos at http://server/repos (an example is seeded)
+* Perform a rake package:sync to scan remote repos for packages
+* Schedule a refresh of the haikuporter and haikuports repos
+* Schedule a rake recipe:sync,lint and package:sync.
