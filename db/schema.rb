@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611202034) do
+ActiveRecord::Schema.define(version: 20140619203005) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "architectures", force: true do |t|
     t.string   "name"
@@ -43,7 +46,7 @@ ActiveRecord::Schema.define(version: 20140611202034) do
 
   create_table "lints", force: true do |t|
     t.boolean  "clean"
-    t.string   "result"
+    t.text     "result"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "recipe_id"
