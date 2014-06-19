@@ -17,7 +17,7 @@
         <strong>Filename:</strong>
         <%= @recipe.filename %><br/>
         <strong>Lint:</strong>
-        <%=raw @recipe.lint[:clean] ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+        <%=raw @recipe.lint && @recipe.lint[:clean] ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@
 </div>
 <div class="CodeRay">
 <div style="padding: 10px;">
-<%=raw @recipe.lint[:result] %>
+<%=raw @recipe.lint && @recipe.lint[:result] ? @recipe.lint[:result] : "<span style='color: red; font-weight: bold'> Error: Missing lint data!</span>" %>
 </div>
 </div>
 
