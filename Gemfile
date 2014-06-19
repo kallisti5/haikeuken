@@ -38,6 +38,9 @@ gem 'open4'
 # Use unicorn as the app server
 gem 'unicorn'
 
+# Postgresql database
+gem 'pg'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

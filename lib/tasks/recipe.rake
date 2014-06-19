@@ -7,7 +7,7 @@ namespace :recipe do
 	puts "Syncing Haikuports with database"
 	puts Rails.application.config.haikuports
 
-	local_recipes = []
+	repo_recipes = []
 	Find.find(Rails.application.config.haikuports) do |path_file|
 		file_name = File.basename(path_file)
 		if file_name =~ /^.*-.*\.recipe$/
@@ -26,18 +26,28 @@ namespace :recipe do
 			recipe = {
 				:name => name_info[:name],
 				:version => name_info[:version],
-				:revision => revision_info[:value],
+				:revision => revision_info[:value].to_i,
 				:category => category_info[:category],
 				:filename => file,
 			}
-			local_recipes.push(recipe)
+			repo_recipes.push(recipe)
 	        end
 	end
 	
-	local_recipes.each do |attributes|
-		puts "Adding lint result for #{attributes[:name]}-#{attributes[:version]}-#{attributes[:revision]}"
-		@new_entry = Recipe.new(attributes)
-		@new_entry.save
+	db_recipes = Recipe.all
+	repo_recipes.each do | repo_attributes |
+		db_known = db_recipes.find_by!(name: repo_attributes[:name], version: repo_attributes[:version])
+		if db_recipes.count == 0 || !db_known
+			puts "Adding recipe #{repo_attributes[:name]}-#{repo_attributes[:version]}-#{repo_attributes[:revision]}"
+			new_entry = Recipe.new(repo_attributes)
+			new_entry.save
+		else
+			if db_known[:revision] != repo_attributes[:revision]
+				puts "Recipe #{repo_attributes[:name]}-#{repo_attributes[:version]} saw a revision change from '#{db_known[:revision]}' to '#{repo_attributes[:revision]}'"
+				db_known[:revision] = repo_attributes[:revision]
+				db_known.save
+			end
+		end
 	end
 
   end
