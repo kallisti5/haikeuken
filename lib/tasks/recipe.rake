@@ -36,7 +36,7 @@ namespace :recipe do
 	
 	db_recipes = Recipe.all
 	repo_recipes.each do | repo_attributes |
-		db_known = db_recipes.find_by!(name: repo_attributes[:name], version: repo_attributes[:version])
+		db_known = db_recipes.find_by(name: repo_attributes[:name], version: repo_attributes[:version])
 		if db_recipes.count == 0 || !db_known
 			puts "Adding recipe #{repo_attributes[:name]}-#{repo_attributes[:version]}-#{repo_attributes[:revision]}"
 			new_entry = Recipe.new(repo_attributes)

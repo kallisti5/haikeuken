@@ -41,6 +41,10 @@ gem 'unicorn'
 # Postgresql database
 gem 'pg'
 
+
+# Performance testing
+gem 'ruby-prof'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
