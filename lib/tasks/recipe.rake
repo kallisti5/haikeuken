@@ -4,9 +4,13 @@ namespace :recipe do
     require 'find'
 
 	puts "================================\n"
-	puts "Syncing Haikuports with database"
+	puts "Syncing database with Haikuports"
 	puts Rails.application.config.haikuports
 
+	puts "Refreshing Haikuports tree..."
+	`git --work-tree=#{Rails.application.config.haikuports} pull --rebase`
+
+	puts "Searching tree for updates / changes..."
 	repo_recipes = []
 	Find.find(Rails.application.config.haikuports) do |path_file|
 		file_name = File.basename(path_file)
@@ -15,7 +19,7 @@ namespace :recipe do
 		    name_info = /^(?<name>\S*)-(?<version>.*)$/.match(recipe_file)
 
 			revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
-			revision_info = /^REVISION\s?=\s?\"?(?<value>\d+)\"?$/.match(revision_line)
+			revision_info = /^REVISION\s?=\s?\"?(?<value>\d+)\"\s*$/.match(revision_line)
 			if revision_info == nil
 				revision_info = { :value => 0 }
 			end
@@ -38,12 +42,12 @@ namespace :recipe do
 	repo_recipes.each do | repo_attributes |
 		db_known = db_recipes.find_by(name: repo_attributes[:name], version: repo_attributes[:version])
 		if db_recipes.count == 0 || !db_known
-			puts "Adding recipe #{repo_attributes[:name]}-#{repo_attributes[:version]}-#{repo_attributes[:revision]}"
+			puts "Add new recipe #{repo_attributes[:name]}-#{repo_attributes[:version]}-#{repo_attributes[:revision]}"
 			new_entry = Recipe.new(repo_attributes)
 			new_entry.save
 		else
 			if db_known[:revision] != repo_attributes[:revision]
-				puts "Recipe #{repo_attributes[:name]}-#{repo_attributes[:version]} saw a revision change from '#{db_known[:revision]}' to '#{repo_attributes[:revision]}'"
+				puts "Update known recipe #{repo_attributes[:name]}-#{repo_attributes[:version]} from revison '#{db_known[:revision]}' to revision '#{repo_attributes[:revision]}'"
 				db_known[:revision] = repo_attributes[:revision]
 				db_known.save
 			end
@@ -56,6 +60,7 @@ namespace :recipe do
   task lint: :environment do
     puts "================================\n"
     puts "Running lint on recipies"
+
     require 'open4'
     Lint.destroy_all
     @recipes = Recipe.all
