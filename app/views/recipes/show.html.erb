@@ -38,13 +38,14 @@
 		<tr style="font-size: 0.9em; text-align: center;" bgcolor="<%= cycle('#eee', '#fff') -%>">
 			<% @recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
 				<% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
+				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
 				<td bgcolor="<%= cycle('#F2F2F2', '#fff') -%>">
 				<% if package.latestrev == 0 %>
 					<%= image_tag "icons/box-missing.png" %>
 				<% elsif package.latestrev == @recipe.revision %>
-					<%= link_to image_tag("icons/box-exists.png"), "#{package.repo['url']}/hpkg/#{hpkgname}" %>
+					<%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %>
 				<% else %>
-					<%= link_to image_tag("icons/box-outdated.png"), "#{package.repo['url']}/hpkg/#{hpkgname}" %>
+					<%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %>
                 <% end %>
 				<br/>Revision <%= package.latestrev %>
 				</td>
