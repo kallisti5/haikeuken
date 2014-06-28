@@ -5,7 +5,7 @@
 FROM ubuntu
 
 RUN apt-get update -q
-RUN apt-get install -qy nginx
+RUN apt-get install -qy nginx postgresql-client
 RUN apt-get install -qy curl
 RUN apt-get install -qy nodejs
 RUN apt-get install -qy python
