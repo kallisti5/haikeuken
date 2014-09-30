@@ -62,9 +62,7 @@ namespace :recipe do
     puts "Running lint on recipies"
 
     require 'open4'
-    Lint.destroy_all
     @recipes = Recipe.all
-    lint_results = []
     @recipes.each do |recipe|
         puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
         pid, stdin, stdout, stderr = Open4.popen4("#{Rails.application.config.haikuporter}" \
@@ -72,21 +70,9 @@ namespace :recipe do
             " --lint #{recipe[:name]}-#{recipe[:version]}")
         ignored, status = Process::waitpid2 pid
 
-        lint_result = {
-            :recipe_id => recipe[:id],
-            :clean => status.to_i == 0 ? TRUE : FALSE,
-            :result => stdout.read.strip.gsub(/\n/, '<br>')
-        }
-		@new_entry = Lint.new(lint_result)
-		@new_entry.save
-
-        #lint_results.push(lint_result)
+		recipe.update(lintret: status.to_i)
+		recipe.update(lint: stdout.read.strip.gsub(/\n/, '<br>'))
     end
-
-	lint_results.each do |attributes|
-		@new_entry = Lint.new(attributes)
-		@new_entry.save
-	end
   end
 
   desc "Empties the applicaions database of recipes"

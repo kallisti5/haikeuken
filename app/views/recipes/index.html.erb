@@ -27,7 +27,7 @@
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
-        <td><%= image_tag "icons/" + (recipe.lint ? (recipe.lint[:clean] ? "tick-circle-frame.png" : "exclamation-red-frame.png") : "working-bar.gif") %></td>
+        <td><%= image_tag "icons/" + (recipe['lintret'] == 0 ? "tick-circle-frame.png" : "exclamation-red-frame.png") %></td>
 		<% if recipe.packages.count < @architectures.count %>
 			<% @architectures.each do |arch| %>
 				<td><%= image_tag "icons/working-bar.gif" %></td>
