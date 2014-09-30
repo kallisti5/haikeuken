@@ -7,8 +7,9 @@ recipe lint results
 
 === Requirements
 
+* Database server URL in environment
+  export DATABASE_URL=postgres://username:password@server:port/databasename
 * TODO
-
 
 === Important commands
 
@@ -23,18 +24,16 @@ recipe lint results
 
 You will like want to automate these rake tasks to keep current data
 
-* rake recipe:lint
-  Performs a lint scan of the current recipes
 * rake recipe:sync
   Syncs the database of recipes with haikuports
+* rake recipe:lint
+  Performs a lint scan of the current recipes
 * rake package:sync
   Syncs the database of known packages with the known repos
 
 
 === Installation
 
-* Prepare a database, and configure hpbs for it by adjusting
-  the config/database.yml file
 * Execute 'bundle install' to install the needed gems
 * Perform a rake db:migrate to create and seed the database
 * Modify your config/environments/*.rb environment to match the location
