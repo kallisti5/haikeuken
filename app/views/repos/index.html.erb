@@ -5,7 +5,7 @@
 
 <table style="border: 1px solid black; width: 100%; border-spacing: 0px;">
   <thead>
-      <tr bgcolor="#aaa" style="font-size: 0.8em; text-align: left;">
+      <tr style="font-size: 0.8em; text-align: left; background-color: #aaaaaa;">
       <th>Name</th>
       <th>Url</th>
       <th>Lastrefresh</th>
@@ -15,7 +15,7 @@
 
   <tbody>
     <% @repos.each do |repo| %>
-      <tr style="font-size: 0.9em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+      <tr style="font-size: 0.9em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= link_to repo.name, repo %></td>
         <td><%= repo.url %></td>
         <td><%= repo.lastrefresh %></td>

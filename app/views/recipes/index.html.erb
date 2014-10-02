@@ -8,7 +8,7 @@
 <center>
 <table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
   <thead>
-	<tr bgcolor="#ccc" style="font-size: 1.0em; text-align: left;">
+	<tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
 		<th>Name</th>
 		<th width="128px">Category</th>
 		<th width="256px">Version</th>
@@ -21,7 +21,7 @@
 
   <tbody>
     <% @recipes.each do |recipe| %>
-      <tr style="font-size: 1.0em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= image_tag "icons/document-task.png" %><%= link_to recipe.name, recipe %></td>
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>

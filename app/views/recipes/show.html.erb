@@ -28,18 +28,18 @@
     </div>
   <table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
 	<thead>
-		<tr bgcolor="#aaa" style="font-size: 0.8em; text-align: center;">
+		<tr style="font-size: 0.8em; text-align: center; background-color: #aaaaaa;">
 			<% @architectures.each do |arch| %>
-				<td bgcolor="<%= cycle('#ccc', '#ddd') -%>"><b><%= arch.name %></b></td>
+				<td style="background-color: <%= cycle('#cccccc', '#dddddd') -%>;"><b><%= arch.name %></b></td>
 			<% end %>
 		</tr>
 	</thead>
 	<tbody>
-		<tr style="font-size: 0.9em; text-align: center;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+		<tr style="font-size: 0.9em; text-align: center; background-color: <%= cycle('#eee', '#fff') -%>;">
 			<% @recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
 				<% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
 				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
-				<td bgcolor="<%= cycle('#F2F2F2', '#fff') -%>">
+				<td style="background-color: <%= cycle('#F2F2F2', '#ffffff') -%>;">
 				<% if package.latestrev == 0 %>
 					<%= image_tag "icons/box-missing.png" %>
 				<% elsif package.latestrev == @recipe.revision %>
@@ -61,13 +61,13 @@
 </div>
 <table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
 	<thead>
-		<tr bgcolor="#ccc" style="font-size: 0.8em;">
+		<tr style="font-size: 0.8em; background-clor: #cccccc;">
 			<td>Build</td><td>Builder</td><td>Architecture</td><td>Start date</td><td>End date</td><td>Result</td>
 		</tr>
 	</thead>
 	<tbody>
 	<% @recipe.builds.each do | build | %>
-	<tr bgcolor="<%= cycle('#f2f2f2', '#fff') -%>">
+	<tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
 		<td><%= link_to "##{build['id']}", build %></td>
 		<td><%= link_to build.builder['hostname'], build.builder %></td>
 		<td><%= build.architecture['name'] %></td>

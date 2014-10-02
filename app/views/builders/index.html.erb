@@ -5,7 +5,7 @@
 
 <table style="border: 1px solid black; border-spacing: 0px; width: 100%; text-align: left;">
   <thead>
-    <tr bgcolor="#ccc" style="font-size: 0.8em;">
+    <tr style="font-size: 0.8em; background-color: #cccccc;">
       <th>Architecture</th>
       <th>Hostname</th>
       <th>Owner</th>
@@ -17,7 +17,7 @@
 
   <tbody>
     <% @builders.each do |builder| %>
-      <tr bgcolor="<%= cycle('#f2f2f2', '#fff') -%>">
+      <tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
         <td><%= builder.architecture['name'] %></td>
         <td><%= builder.hostname %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
