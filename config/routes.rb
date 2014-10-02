@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :repos
 
   resources :recipes
+  get '/recipe/:name(/:version)', :to => 'recipes#show_byname', :format => false, :constraints => { :version => /[^\/]+/ }
 
   root 'recipes#index'
 end
