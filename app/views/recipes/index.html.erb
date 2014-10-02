@@ -20,7 +20,7 @@
   </thead>
 
   <tbody>
-    <% @recipes.each do |recipe| %>
+    <% @recipes.includes(:packages).includes(:architectures).each do |recipe| %>
       <tr style="font-size: 0.9em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
         <td><%= image_tag "icons/document-task.png" %><%= link_to recipe.name, recipe %></td>
         <td><%= recipe.category %></td>
