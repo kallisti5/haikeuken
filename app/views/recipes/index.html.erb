@@ -6,22 +6,22 @@
 </div>
 
 <center>
-<table style="border: 1px solid black; width: 100%; border-spacing: 0px;">
+<table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
   <thead>
-	<tr bgcolor="#ccc" style="font-size: 0.8em; text-align: left;">
+	<tr bgcolor="#ccc" style="font-size: 1.0em; text-align: left;">
 		<th>Name</th>
-		<th>Category</th>
-		<th width="128px">Version</th>
-		<th width="32px">Rev.</th>
-		<th>Lint</th>
+		<th width="128px">Category</th>
+		<th width="256px">Version</th>
+		<th width="42px">Rev.</th>
+		<th width="32px">Lint</th>
 		<% @architectures.order('architectures.name').each do |arch| %>
-			<th width="68px"><%= arch[:name] %></th>
+			<th width="64px"><%= arch[:name] %></th>
 		<% end %>
   </thead>
 
   <tbody>
     <% @recipes.each do |recipe| %>
-      <tr style="font-size: 0.9em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
+      <tr style="font-size: 1.0em;" bgcolor="<%= cycle('#eee', '#fff') -%>">
         <td><%= image_tag "icons/document-task.png" %><%= link_to recipe.name, recipe %></td>
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
@@ -49,5 +49,7 @@
   </tbody>
 </table>
 </center>
+<%= page_entries_info @recipes %>
+<%= will_paginate @recipes %>
 
 <br>
