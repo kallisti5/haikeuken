@@ -5,7 +5,6 @@
   <p>This is a complete listing of <a href="http://bitbucket.org/haikuports/haikuports" target="_BLANK">recipes</a> known to the Haiku package build system</p>
 </div>
 
-
 <center>
 <table style="border: 1px solid black; width: 100%; border-spacing: 0px;">
   <thead>
@@ -33,7 +32,7 @@
 				<td><%= image_tag "icons/working-bar.gif" %></td>
 			<% end %>
 		<% else %>
-			<% recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
+			<% recipe.packages.each do | package | %>
 			<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
 			<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
 				<% if package.latestrev == 0 %>
