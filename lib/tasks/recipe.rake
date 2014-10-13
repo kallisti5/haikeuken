@@ -3,16 +3,28 @@ namespace :recipe do
   task sync: :environment do
     require 'find'
 
-	puts "================================\n"
+	puts "================================"
 	puts "Syncing database with Haikuports"
-	puts Rails.application.config.haikuports
+	puts "================================"
+	puts "Repo: #{Rails.application.config.haikuports}"
+
+	Dir.mkdir("#{Rails.root.join("tmp")}/repos") unless File.directory?("#{Rails.root.join("tmp")}/repos")
 
 	puts "Refreshing Haikuports tree..."
-	`git --work-tree=#{Rails.application.config.haikuports} pull --rebase`
+	begin
+		haikuports = Git.open("#{Rails.root.join("tmp")}/repos/ports.git")
+	rescue
+		puts "No cached port repo found, cloning..."
+		haikuports = Git.clone(Rails.application.config.haikuports,
+			"#{Rails.root.join("tmp")}/repos/ports.git", :bare => false)
+	end
+
+	puts "Pulling upstream port updates..."
+	haikuports.pull
 
 	puts "Searching tree for updates / changes..."
 	repo_recipes = []
-	Find.find(Rails.application.config.haikuports) do |path_file|
+	Find.find(haikuports.dir.to_s) do |path_file|
 		file_name = File.basename(path_file)
 		if file_name =~ /^.*-.*\.recipe$/
 		    recipe_file = File.basename(path_file, ".recipe")

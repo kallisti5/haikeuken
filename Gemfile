@@ -45,6 +45,9 @@ gem 'pg'
 # Performance testing
 gem 'ruby-prof'
 
+# Manage git repos
+gem 'git'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
