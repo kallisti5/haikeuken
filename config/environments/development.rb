@@ -35,7 +35,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.haikuports = '/srv/repos/haikuports'
-  config.haikuporter = '/srv/repos/haikuporter/haikuporter'
-  config.haikuporter_conf = '/srv/repos/haikuporter/haikuports.conf'
+  config.haikuports = 'https://bitbucket.org/haikuports/haikuports.git'
+  config.haikuporter = 'https://bitbucket.org/haikuports/haikuporter.git'
 end

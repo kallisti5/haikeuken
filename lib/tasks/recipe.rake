@@ -3,6 +3,15 @@ namespace :recipe do
   task sync: :environment do
     require 'find'
 
+	porter_config = [ "TREE_PATH=\"#{Rails.root.join("tmp")}/repos/ports.git\"\n",
+		"PACKAGER=\"Haiku Kitchen <admin@haikungfu.net>\"\n",
+		"TARGET_ARCHITECTURE=\"x86\"\n",
+		"LICENSES_DIRECTORY=\"/srv/repos/haiku/data/system/data/licenses\"\n" ]
+
+	File.open("#{Rails.root.join("tmp")}/ports.conf", "w") do |f|
+		porter_config.each do |row| f << row end
+	end
+
 	puts "================================"
 	puts "Syncing database with Haikuports"
 	puts "================================"
@@ -19,8 +28,16 @@ namespace :recipe do
 			"#{Rails.root.join("tmp")}/repos/ports.git", :bare => false)
 	end
 
+	puts "Refreshing Haikuporter..."
+	begin
+		haikuporter = Git.open("#{Rails.root.join("tmp")}/repos/porter.git")
+	rescue
+		puts "No cached porter repo found, cloning..."
+		haikuporter = Git.clone(Rails.application.config.haikuporter,
+			"#{Rails.root.join("tmp")}/repos/porter.git", :bare => false)
+	end
 	puts "Pulling upstream port updates..."
-	haikuports.pull
+	haikuporter.pull
 
 	puts "Searching tree for updates / changes..."
 	repo_recipes = []
@@ -70,15 +87,18 @@ namespace :recipe do
 
   desc "Performs a lint scan of the current recipes"
   task lint: :environment do
-    puts "================================\n"
+	puts "================================"
     puts "Running lint on recipies"
+	puts "================================"
+	puts "Repo: #{Rails.application.config.haikuports}"
+	puts "Porter: #{Rails.application.config.haikuporter}"
 
     require 'open4'
     @recipes = Recipe.all
     @recipes.each do |recipe|
         puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
-        pid, stdin, stdout, stderr = Open4.popen4("#{Rails.application.config.haikuporter}" \
-            " --config=#{Rails.application.config.haikuporter_conf} " \
+        pid, stdin, stdout, stderr = Open4.popen4("#{Rails.root.join("tmp")}/repos/porter.git/haikuporter" \
+            " --config=#{Rails.root.join("tmp")}/ports.conf" \
             " --lint #{recipe[:name]}-#{recipe[:version]}")
         ignored, status = Process::waitpid2 pid
 

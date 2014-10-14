@@ -83,7 +83,4 @@ Rails.application.configure do
 
   config.haikuports = 'https://bitbucket.org/haikuports/haikuports.git'
   config.haikuporter = 'https://bitbucket.org/haikuports/haikuporter.git'
-
-  # TODO: Erase me!
-  config.haikuporter_conf = '/srv/repos/haikuporter/haikuports.conf'
 end
