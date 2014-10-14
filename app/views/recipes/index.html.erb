@@ -35,12 +35,15 @@
 			<% recipe.packages.each do | package | %>
 			<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
 			<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
+			<% age = recipe.revision - package.latestrev %>
 				<% if package.latestrev == 0 %>
 					<td><%= image_tag "icons/box-missing.png" %></td>
-				<% elsif package.latestrev == recipe.revision %>
-					<td><%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %></td>
+				<% elsif age == 0 %>
+					<td><%= link_to image_tag("icons/box-exists.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
+				<% elsif age <= 4 %>
+					<td><%= link_to image_tag("icons/box-outdated.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
 				<% else %>
-					<td><%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %></td>
+					<td><%= link_to image_tag("icons/box-outdated2.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
 				<% end %>
 			<% end %>
 		<% end %>
