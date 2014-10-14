@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.includes(:packages).includes(:architectures).all.paginate(:page => params[:page])
+    @recipes = Recipe.search(params[:search]).includes(:packages).includes(:architectures).paginate(:page => params[:page])
     @architectures = Architecture.all
   end
 
