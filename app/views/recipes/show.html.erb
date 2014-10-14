@@ -82,14 +82,14 @@
 <div class="subtitle">
   <span id="major">Current Recipe</span><br/>
 </div>
-<%=raw CodeRay.highlight_file("#{Rails.application.config.haikuports}/#{@recipe.filename}") %>
+<%=raw CodeRay.highlight_file("#{Rails.root.join("tmp")}/repos/ports.git/#{@recipe.filename}") %>
 
 <div class="subtitle">
   <span id="major">Lint Results</span><br/>
 </div>
 <div class="CodeRay">
 <div style="padding: 10px;">
-<%=raw @recipe[:lintret] >= 0 ? @recipe[:lint] : "<span style='color: red; font-weight: bold'> Error: Missing lint data!</span>" %>
+<%=raw @recipe[:lintret] ? @recipe[:lint] : "<span style='color: red; font-weight: bold'> Error: Missing lint data!</span>" %>
 </div>
 </div>
 
