@@ -6,9 +6,9 @@ class Recipe < ActiveRecord::Base
   def self.search(search)
     if search
       # TODO: Better sort version numbers as they are strings
-      where("name LIKE ?", "%#{search}%").order(:version)
+      where("name LIKE ?", "%#{search}%").order([:category, :name, :version])
     else
-      all
+      all.order([:category, :name, :version])
     end
   end
 end
