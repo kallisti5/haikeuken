@@ -13,8 +13,8 @@
 		<th width="128px">Category</th>
 		<th width="256px">Version</th>
 		<th width="42px">Rev.</th>
-		<th width="32px">Lint</th>
-		<% @architectures.order('architectures.name').each do |arch| %>
+		<th width="64px">Lint</th>
+		<% @architectures.each do |arch| %>
 			<th width="64px"><%= arch[:name] %></th>
 		<% end %>
   </thead>
@@ -33,9 +33,9 @@
 			<% end %>
 		<% else %>
 			<% recipe.packages.each do | package | %>
-			<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
-			<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
-			<% age = recipe.revision - package.latestrev %>
+				<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
+				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
+				<% age = recipe.revision - package.latestrev %>
 				<% if package.latestrev == 0 %>
 					<td><%= image_tag "icons/box-missing.png" %></td>
 				<% elsif age == 0 %>

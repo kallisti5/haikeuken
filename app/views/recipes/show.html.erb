@@ -36,7 +36,7 @@
 	</thead>
 	<tbody>
 		<tr style="font-size: 0.9em; text-align: center; background-color: <%= cycle('#eee', '#fff') -%>;">
-			<% @recipe.packages.joins(:architecture).order('architectures.name').each do | package | %>
+			<% @recipe.packages.joins(:architecture).each do | package | %>
 				<% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
 				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
 				<td style="background-color: <%= cycle('#F2F2F2', '#ffffff') -%>;">
