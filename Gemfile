@@ -34,7 +34,7 @@ gem 'open4'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Paginate
-gem 'will_paginate'
+#gem 'will_paginate'
 
 # Use unicorn as the app server
 gem 'unicorn'
