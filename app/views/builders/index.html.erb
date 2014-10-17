@@ -11,26 +11,20 @@
       <th>Owner</th>
       <th>Location</th>
       <th>Last seen</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @builders.each do |builder| %>
       <tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
+        <td><%= link_to builder.hostname, builder %></td>
         <td><%= builder.architecture['name'] %></td>
-        <td><%= builder.hostname %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
         <td><%= builder.lastheard %></td>
-        <td><%= link_to 'Show', builder %></td>
-        <td><%= link_to 'Edit', edit_builder_path(builder) %></td>
-        <td><%= link_to 'Destroy', builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Builder', new_builder_path %>

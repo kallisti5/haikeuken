@@ -13,15 +13,6 @@ class BuildersController < ApplicationController
   def show
   end
 
-  # GET /builders/new
-  def new
-    @builder = Builder.new
-  end
-
-  # GET /builders/1/edit
-  def edit
-  end
-
   # GET /builders/hostname/getwork
   def getwork
     if !@builder or params[:token] != @builder['token']

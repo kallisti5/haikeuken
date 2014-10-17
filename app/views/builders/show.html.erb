@@ -2,7 +2,7 @@
 
 <p>
   <strong>Architecture:</strong>
-  <%= @builder.architecture_id %>
+  <%= @builder.architecture.name %>
 </p>
 
 <p>
@@ -17,17 +17,12 @@
 
 <p>
   <strong>Location:</strong>
-  <%= @builder.location %>
+  <%= link_to @builder.location, "https://maps.google.com/maps?q=#{@builder.location}", :target => "_blank" %>
 </p>
 
 <p>
-  <strong>Lastheard:</strong>
+  <strong>Last seen:</strong>
   <%= @builder.lastheard %>
-</p>
-
-<p>
-  <strong>Token:</strong>
-  <%= @builder.token %>
 </p>
 
 <%= link_to 'Edit', edit_builder_path(@builder) %> |
