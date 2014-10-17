@@ -27,6 +27,8 @@ namespace :recipe do
 		haikuports = Git.clone(Rails.application.config.haikuports,
 			"#{Rails.root.join("tmp")}/repos/ports.git", :bare => false)
 	end
+	puts "Pulling upstream port updates..."
+	haikuports.pull
 
 	puts "Refreshing Haikuporter..."
 	begin
@@ -36,7 +38,7 @@ namespace :recipe do
 		haikuporter = Git.clone(Rails.application.config.haikuporter,
 			"#{Rails.root.join("tmp")}/repos/porter.git", :bare => false)
 	end
-	puts "Pulling upstream port updates..."
+	puts "Pulling port tool updates..."
 	haikuporter.pull
 
 	# Parse each recipe for info, build repo_recipes
