@@ -28,6 +28,7 @@ namespace :recipe do
 			"#{Rails.root.join("tmp")}/repos/ports.git", :bare => false)
 	end
 	puts "Pulling upstream port updates..."
+	haikuports.remote("origin").fetch
 	haikuports.pull
 
 	puts "Refreshing Haikuporter..."
@@ -39,6 +40,7 @@ namespace :recipe do
 			"#{Rails.root.join("tmp")}/repos/porter.git", :bare => false)
 	end
 	puts "Pulling port tool updates..."
+	haikuporter.remote("origin").fetch
 	haikuporter.pull
 
 	# Parse each recipe for info, build repo_recipes
