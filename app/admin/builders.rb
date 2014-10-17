@@ -1,3 +1,14 @@
 ActiveAdmin.register Builder.includes(:architectures) do
-	scope :all, :default => true
+	index do
+		column :hostname
+		column :architecture
+		column :owner
+		column :location
+		column "Last Seen", :lastheard
+		actions
+	end
+
+	filter :architecture
+	filter :owner
+	filter :location
 end
