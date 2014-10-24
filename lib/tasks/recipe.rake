@@ -58,7 +58,7 @@ namespace :recipe do
 				revision_info = { :value => 0 }
 			end
 	
-			file = path_file.gsub(Rails.application.config.haikuports, "")
+			file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", "")
 			category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
 
 			recipe = {
