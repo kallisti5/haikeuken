@@ -24,30 +24,29 @@ class BuildersController < ApplicationController
     @builder.update(:lastheard => Time.now)
 
     workitems = []
-    recipes = Recipe.all
-	recipes.each do | recipe |
-      recipe.packages.each do | package |
-        if package.architecture != @builder.architecture
-          # not the builders architecture
-          next
-        end
-        if package.latestrev < recipe.revision
-          # last seen built revision is outdated
-          # add work to tasks
-          task = {
-            :name => recipe[:name],
-            :version => recipe[:version],
-            :revision => recipe[:revision],
-            :architecture => @builder.architecture[:name]
-          }
-          workitems.push(task)
-        end
-	  end
-    end
+    Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: @builder.architecture).each do |package|
 
-	# Fow now we push back a single work item.  We could push back
-	# several, but these are early days... KISS
-    render json: workitems[rand(0..workitems.count)]
+      # Limit to one workitem for now
+      # Could this be done in the query?
+      next if workitems.count > 0
+      next if Build.where(recipe: package.recipe).where(completed: nil).count > 0
+
+      # Schedule the build for this builder
+      Build.create(architecture: package.architecture,
+        builder: @builder, recipe: package.recipe, issued: Time.now)
+
+      # last seen built revision is outdated
+      # add work to tasks
+      task = {
+        :name => package.recipe[:name],
+        :version => package.recipe[:version],
+        :revision => package.recipe[:revision],
+        :architecture => @builder.architecture[:name]
+      }
+      workitems.push(task)
+    end
+    
+    render json: workitems
   end
 
   # POST /builders
