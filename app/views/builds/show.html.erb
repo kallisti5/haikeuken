@@ -2,22 +2,22 @@
 
 <p>
   <strong>Architecture:</strong>
-  <%= @build.architecture_id %>
+  <%= @build.architecture['name'] %>
 </p>
 
 <p>
   <strong>Builder:</strong>
-  <%= @build.builder_id %>
+  <%= @build.builder['hostname'] %>
 </p>
 
 <p>
   <strong>Recipe:</strong>
-  <%= @build.recipe_id %>
+  <%= @build.recipe['name'] %>
 </p>
 
 <p>
   <strong>Issued:</strong>
-  <%= @build.issued %>
+  <%= time_ago_in_words(@build.issued) %> ago (<%=@build.issued%>)
 </p>
 
 <p>
