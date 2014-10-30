@@ -1,8 +1,14 @@
-<h1>Listing builds</h1>
+<p id="notice"><%= notice %></p>
 
-<table>
+<div class="title">
+  <h2>Builds</h2>
+  <p>This is a listing of package builds that have been issued.</p>
+</div>
+
+<center>
+<table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
   <thead>
-    <tr>
+    <tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
       <th>Architecture</th>
       <th>Builder</th>
       <th>Recipe</th>
@@ -17,7 +23,7 @@
 
   <tbody>
     <% @builds.each do |build| %>
-      <tr>
+      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= build.architecture['name'] %></td>
         <td><%= build.builder['hostname'] %></td>
         <td><%= build.recipe['name'] %></td>
@@ -33,5 +39,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Build', new_build_path %>

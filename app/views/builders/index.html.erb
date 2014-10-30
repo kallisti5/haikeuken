@@ -1,11 +1,13 @@
+<p id="notice"><%= notice %></p>
+
 <div class="title">
   <h2>Builders</h2>
   <p>This is a complete listing of build machines leveraged by the Haiku package build system</p>
 </div>
 
-<table style="border: 1px solid black; border-spacing: 0px; width: 100%; text-align: left;">
+<table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
   <thead>
-    <tr style="font-size: 0.8em; background-color: #cccccc;">
+    <tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
       <th>Hostname</th>
       <th>Architecture</th>
       <th>Owner</th>
@@ -16,7 +18,7 @@
 
   <tbody>
     <% @builders.each do |builder| %>
-      <tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
+      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= link_to builder.hostname, builder %></td>
         <td><%= builder.architecture['name'] %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
