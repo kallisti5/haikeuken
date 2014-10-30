@@ -8,6 +8,8 @@ ActiveAdmin.register Builder.includes(:architectures) do
 		actions
 	end
 
+	permit_params :hostname, :architecture_id, :owner, :location, :lastheard
+
 	filter :architecture
 	filter :owner
 	filter :location
