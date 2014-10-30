@@ -6,8 +6,8 @@
 <table style="border: 1px solid black; border-spacing: 0px; width: 100%; text-align: left;">
   <thead>
     <tr style="font-size: 0.8em; background-color: #cccccc;">
-      <th>Architecture</th>
       <th>Hostname</th>
+      <th>Architecture</th>
       <th>Owner</th>
       <th>Location</th>
       <th>Last seen</th>
@@ -21,7 +21,9 @@
         <td><%= builder.architecture['name'] %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
-        <td><%= builder.lastheard %></td>
+        <% age = Time.now.to_i - builder.lastheard.to_i %>
+        <td style="background-color:<%= (age >= 21600) ? "#FF9999" : "#CCFF99" %>">
+        <%= time_ago_in_words(builder.lastheard) %></td>
       </tr>
     <% end %>
   </tbody>

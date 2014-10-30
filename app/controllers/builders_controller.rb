@@ -21,6 +21,8 @@ class BuildersController < ApplicationController
       return
     end
 
+    @builder.update(:lastheard => Time.now)
+
     workitems = []
     recipes = Recipe.all
 	recipes.each do | recipe |
