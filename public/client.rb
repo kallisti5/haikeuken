@@ -71,16 +71,15 @@ def loop()
 	# and we could do work.each. For now we just
 	# do one task.
 
-	task = work
-
-	if task == nil
+	if work == nil or work.count == 0
 		puts "- No work available"
 		return 0
 	end
 	
-	puts "+ Work received"
-	puts "+ Building #{task['name']}-#{task['version']}-#{task['revision']}"
-
+	work.each do |task|
+		puts "+ Work received"
+		puts "+ Building #{task['name']}-#{task['version']}-#{task['revision']}"
+    end
 end
 
 puts "Haiku Package Build System Client #{@version}"
