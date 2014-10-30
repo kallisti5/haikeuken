@@ -6,25 +6,27 @@
       <th>Architecture</th>
       <th>Builder</th>
       <th>Recipe</th>
+      <th>Version</th>
+      <th>Revision</th>
       <th>Issued</th>
       <th>Completed</th>
-      <th>Result</th>
-      <th colspan="3"></th>
+      <th>Status</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @builds.each do |build| %>
       <tr>
-        <td><%= build.architecture_id %></td>
-        <td><%= build.builder_id %></td>
-        <td><%= build.recipe_id %></td>
+        <td><%= build.architecture['name'] %></td>
+        <td><%= build.builder['hostname'] %></td>
+        <td><%= build.recipe['name'] %></td>
+        <td><%= build.recipe['version'] %></td>
+        <td><%= build.recipe['revision'] %></td>
         <td><%= build.issued %></td>
         <td><%= build.completed %></td>
-        <td><%= build.result %></td>
+        <td><%= !build.completed ? "Issued" : "Complete" %></td>
         <td><%= link_to 'Show', build %></td>
-        <td><%= link_to 'Edit', edit_build_path(build) %></td>
-        <td><%= link_to 'Destroy', build, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
