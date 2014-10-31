@@ -17,7 +17,6 @@
       <th>Issued</th>
       <th>Completed</th>
       <th>Status</th>
-      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -25,20 +24,19 @@
     <% @builds.each do |build| %>
       <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= build.architecture['name'] %></td>
-        <td><%= build.builder['hostname'] %></td>
-        <td><%= build.recipe['name'] %></td>
+        <td><%= link_to build.builder['hostname'], build.builder %></td>
+        <td><%= link_to build.recipe['name'], build.recipe %></td>
         <td><%= build.recipe['version'] %></td>
         <td><%= build.recipe['revision'] %></td>
         <td><%= build.issued %></td>
         <td><%= build.completed ? "build.completed" : "never" %></td>
         <% if (Time.now.to_i - build.issued.to_i) > 21600 and build.completed == nil %>
-        <td><%= image_tag "icons/clock--exclamation.png" %> Timed Out</td>
+        <td><%= image_tag "icons/clock--exclamation.png" %> <%= link_to 'Timed out', build %></td>
         <% elsif build.completed %>
-        <td><%= image_tag "icons/flag-green.png" %> Complete</td>
+        <td><%= image_tag "icons/flag-green.png" %> <%= link_to 'Complete', build %></td>
         <% else %>
-        <td><%= image_tag "icons/working-bar.gif" %> Building</td>
+        <td><%= image_tag "icons/working-bar.gif" %> <%= link_to 'Building', build %></td>
         <% end %>
-        <td><%= link_to 'Show', build %></td>
       </tr>
     <% end %>
   </tbody>
