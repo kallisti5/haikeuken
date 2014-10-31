@@ -1,29 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Architecture:</strong>
-  <%= @builder.architecture.name %>
-</p>
+<div class="title">
+  <span id="major"><%=@builder.hostname %></span><br/>
+  <span id="minor"><%=@builder.architecture.name%> package builder owned by <%=@builder.owner%></span>
+</div>
 
-<p>
-  <strong>Hostname:</strong>
-  <%= @builder.hostname %>
-</p>
-
-<p>
-  <strong>Owner:</strong>
-  <%= @builder.owner %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= link_to @builder.location, "https://maps.google.com/maps?q=#{@builder.location}", :target => "_blank" %>
-</p>
-
+<img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=4&size=650x200">
 <p>
   <strong>Last seen:</strong>
-  <%= @builder.lastheard %>
+  <%= time_ago_in_words(@builder.lastheard) %> ago
 </p>
 
-<%= link_to 'Edit', edit_builder_path(@builder) %> |
+<p>
+  <h3>Recent package builds:</h3>
+<br/>
+<table style="border: 1px solid black; width: 70%; border-spacing: 0px; margin-bottom: 3px;">
+  <thead>
+    <tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
+      <th>Recipe</th>
+      <th>Version</th>
+      <th>Revision</th>
+      <th>Issued</th>
+      <th>Completed</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @builder.builds.order('issued DESC').first(10).each do |build| %>
+      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
+        <td><%= link_to build.recipe['name'], build.recipe %></td>
+        <td><%= build.recipe['version'] %></td>
+        <td><%= build.recipe['revision'] %></td>
+        <td><%= build.issued %></td>
+        <td><%= build.completed ? "build.completed" : "never" %></td>
+        <% if (Time.now.to_i - build.issued.to_i) > 21600 and build.completed == nil %>
+        <td><%= image_tag "icons/clock--exclamation.png" %> <%= link_to 'Timed out', build %></td>
+        <% elsif build.completed %>
+        <td><%= image_tag "icons/flag-green.png" %> <%= link_to 'Complete', build %></td>
+        <% else %>
+        <td><%= image_tag "icons/working-bar.gif" %> <%= link_to 'Building', build %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</p>
+
+
 <%= link_to 'Back', builders_path %>
