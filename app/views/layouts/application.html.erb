@@ -23,6 +23,7 @@
             <li <%= params[:controller] == 'recipes' ? "class=active" : nil %>><%= link_to "Recipes", :recipes %>
             <li <%= params[:controller] == 'builders' ? "class=active" : nil %>><%= link_to "Builders", :builders %>
             <li <%= params[:controller] == 'builds' ? "class=active" : nil %>><%= link_to "Builds", :builds %>
+            <li <%= params[:controller] == 'help' ? "class=active" : nil %>><%= link_to "Help", 'help/builders' %>
         </ul>
     </div>
 </div>

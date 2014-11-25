@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
   get 'help/builders'
-
   get 'help/recipes'
-
   get 'help/repos'
-
   get 'help/builds'
+  get 'help', :to => 'help#index'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

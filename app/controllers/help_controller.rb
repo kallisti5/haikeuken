@@ -1,4 +1,7 @@
 class HelpController < ApplicationController
+  def index
+  end
+
   def builders
   end
 
