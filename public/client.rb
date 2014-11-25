@@ -12,9 +12,9 @@ require 'yaml'
 #require 'colorize'
 ##########################################
 
-# Pull settings from B_USER_SETTINGS_DIRECTORY/hpbs.yml
+# Pull settings from B_USER_SETTINGS_DIRECTORY/haikeuken.yml
 settings_dir = `finddir B_USER_SETTINGS_DIRECTORY`.delete!("\n")
-@settings = YAML::load_file("#{settings_dir}/hpbs.yml")
+@settings = YAML::load_file("#{settings_dir}/haikeuken.yml")
 @remote_uri = "#{@settings['server']['url']}/builders/#{@settings['general']['hostname']}"
 
 #puts @settings.inspect

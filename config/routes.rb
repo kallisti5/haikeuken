@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'help/builders'
+
+  get 'help/recipes'
+
+  get 'help/repos'
+
+  get 'help/builds'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :builds
