@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :builders
   get '/builders/:hostname/getwork', :to => 'builders#getwork'
+  post '/builders/:hostname/putwork', :to => 'builders#putwork'
   #match '/builders(/:hostname)/getwork', :action => 'getwork', via: [:get], :controller => :builders
 
   resources :repos

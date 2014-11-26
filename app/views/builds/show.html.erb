@@ -26,6 +26,11 @@
 </p>
 
 <p>
+  <strong>Status:</strong>
+  <%= image_tag "icons/#{@build.status.downcase}.png" %> <%= @build.status %>
+</p>
+
+<p>
   <strong>Result:</strong>
   <%= @build.result %>
 </p>

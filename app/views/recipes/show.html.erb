@@ -66,14 +66,14 @@
 		</tr>
 	</thead>
 	<tbody>
-	<% @recipe.builds.each do | build | %>
+	<% @recipe.builds.order('issued DESC').each do | build | %>
 	<tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
 		<td><%= link_to "##{build['id']}", build %></td>
 		<td><%= link_to build.builder['hostname'], build.builder %></td>
 		<td><%= build.architecture['name'] %></td>
 		<td><%= build['issued'] %></td>
 		<td><%= build['completed'] %></td>
-		<td><%= image_tag "icons/tick.png" %></td>
+		<td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
 	</tr>
 	<% end %>
 	</tbody>

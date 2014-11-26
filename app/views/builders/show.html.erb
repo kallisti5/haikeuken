@@ -33,14 +33,8 @@
         <td><%= build.recipe['version'] %></td>
         <td><%= build.recipe['revision'] %></td>
         <td><%= build.issued %></td>
-        <td><%= build.completed ? "build.completed" : "never" %></td>
-        <% if (Time.now.to_i - build.issued.to_i) > 21600 and build.completed == nil %>
-        <td><%= image_tag "icons/clock--exclamation.png" %> <%= link_to 'Timed out', build %></td>
-        <% elsif build.completed %>
-        <td><%= image_tag "icons/flag-green.png" %> <%= link_to 'Complete', build %></td>
-        <% else %>
-        <td><%= image_tag "icons/working-bar.gif" %> <%= link_to 'Building', build %></td>
-        <% end %>
+        <td><%= build.completed ? build.completed : "never" %></td>
+        <td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
       </tr>
     <% end %>
   </tbody>

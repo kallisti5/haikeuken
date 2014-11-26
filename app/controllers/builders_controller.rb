@@ -1,6 +1,9 @@
 class BuildersController < ApplicationController
   before_action :set_builder, only: [:show, :edit, :update, :destroy]
-  before_action :set_builder_byhost, only: [:getwork]
+  before_action :set_builder_byhost, only: [:getwork, :putwork]
+
+  # We accept data from outside of the normal rails app
+  skip_before_action :verify_authenticity_token, only: [:putwork]
 
   # GET /builders
   # GET /builders.json
@@ -11,6 +14,21 @@ class BuildersController < ApplicationController
   # GET /builders/1
   # GET /builders/1.json
   def show
+  end
+
+  # POST /builders/hostname/putwork 
+  def putwork
+    if !@builder or params[:token] != @builder['token']
+      # Invalid builder or token, redirect to root
+      redirect_to "/", notice: 'Invalid builder API call!'
+      return
+    end
+
+    @builder.update(:lastheard => Time.now)
+	build = Build.find(params[:build_id])
+	build.update(:completed => Time.now, :status => (params[:result] == "true") ? "Success" : "Failure")
+
+	redirect_to "/"
   end
 
   # GET /builders/hostname/getwork
@@ -32,12 +50,14 @@ class BuildersController < ApplicationController
       next if Build.where(recipe: package.recipe).where(completed: nil).count > 0
 
       # Schedule the build for this builder
-      Build.create(architecture: package.architecture,
-        builder: @builder, recipe: package.recipe, issued: Time.now)
+      build = Build.create(architecture: package.architecture,
+        builder: @builder, recipe: package.recipe, issued: Time.now,
+		status: "Building")
 
       # last seen built revision is outdated
       # add work to tasks
       task = {
+		:id => build[:id],
         :name => package.recipe[:name],
         :version => package.recipe[:version],
         :revision => package.recipe[:revision],
@@ -103,6 +123,6 @@ class BuildersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def builder_params
-      params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token)
+      params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token, :result, :build_id)
     end
 end

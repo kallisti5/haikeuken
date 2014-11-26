@@ -6,6 +6,8 @@ namespace :build do
       if now.to_i - build.issued.to_i > 43200
         puts "#{build.recipe[:name]} has expired, removing..."
         build.destroy
+      elsif now.to_i - build.issued.to_i > 21600
+        build.update(:status => "Timeout")
       end
     end
   end
