@@ -17,6 +17,8 @@ settings_dir = `finddir B_USER_SETTINGS_DIRECTORY`.delete!("\n")
 @settings = YAML::load_file("#{settings_dir}/haikeuken.yml")
 @remote_uri = "#{@settings['server']['url']}/builders/#{@settings['general']['hostname']}"
 
+@porter_arguments = "-y -v --no-dependencies"
+
 #puts @settings.inspect
 
 def getwork()
@@ -32,13 +34,35 @@ def getwork()
 	return json
 end
 
+
+def putwork(result, buildlog, build_id)
+	uri = URI("#{@remote_uri}/putwork")
+
+	#req = Net::HTTP::Post.new(uri.request_uri)
+	#req.set_form_data('result' => result)
+
+	begin
+		Net::HTTP.post_form uri, {"token" => @settings['general']['token'],
+			"result" => result, "build_id" => build_id}
+		#Net::HTTP.start(uri.hostname, uri.port) do |http|
+		#	http.request(req)
+		#end
+	rescue
+		puts "=========================================="
+		puts "Error: Server #{uri}"
+		puts "=========================================="
+		return nil
+	end
+end
+
+
 def refrepo()
 	# Clone or update haikuporter
 	if ! Dir.exists?("./haikuporter")
-		`git clone https://bitbucket.org/haikuports/haikuporter.git ./haikuporter`
+		system 'git clone https://bitbucket.org/haikuports/haikuporter.git ./haikuporter'
 	else
 		Dir.chdir("./haikuporter")
-		`git pull --rebase`
+		system 'git pull --rebase'
 		Dir.chdir(@settings['general']['work_path'])
 	end
 
@@ -50,18 +74,19 @@ def refrepo()
 
 	# Clone or update haikuports
 	if ! Dir.exists?("./haikuports")
-		`git clone https://bitbucket.org/haikuports/haikuports.git ./haikuports`
+		system 'git clone https://bitbucket.org/haikuports/haikuports.git ./haikuports'
 	else
 		Dir.chdir("./haikuports")
-		`git pull --rebase`
+		system 'git pull --rebase'
 		Dir.chdir(@settings['general']['work_path'])
 	end
 end
 
 
 def loop()
-	puts "+ Refreshing repos..."
-	refrepo()
+	# Disabled for testing
+	#puts "+ Refreshing repos..."
+	#refrepo()
 
 	puts "+ Checking for new work..."
 
@@ -78,7 +103,11 @@ def loop()
 	
 	work.each do |task|
 		puts "+ Work received"
+		worklog = "/tmp/#{task['name']}-#{task['version']}-#{task['revision']}.log"
 		puts "+ Building #{task['name']}-#{task['version']}-#{task['revision']}"
+		#result = system "#{@settings['general']['work_path']}/haikuporter/haikuporter #{@porter_arguments} #{task['name']}-#{task['version']} &> #{worklog}"
+		result = false
+		putwork(result, worklog, task['id'])
     end
 end
 
