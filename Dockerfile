@@ -1,5 +1,5 @@
 ###
-# Enclose Haikeuken in a docker container
+# Enclose latest Haikeuken in a docker container
 ###
 
 FROM fedora:latest
@@ -7,6 +7,7 @@ FROM fedora:latest
 RUN yum update -y
 RUN yum install -y nginx postgresql-client libpq-dev
 RUN yum install -y curl
+RUN yum install -y git
 RUN yum install -y nodejs
 RUN yum install -y python
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
@@ -24,10 +25,13 @@ RUN chmod +x /usr/bin/start-server
 
 # Add rails project to project directory
 RUN mkdir -p /app/haikeuken
-ADD ./ /app/haikeuken
 
 # set WORKDIR
 WORKDIR /app/haikeuken
+# Add our current code...
+#ADD ./ /app/haikeuken
+# ... or clone latest upstream
+RUN git clone https://github.com/kallisti5/haikeuken.git .
 
 # bundle install
 RUN /bin/bash -l -c "bundle install"
