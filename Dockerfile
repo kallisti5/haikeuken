@@ -18,20 +18,24 @@ RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install 2.1.0"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
-# Add configuration files in repository to filesystem
-ADD config/container/nginx-site.conf /etc/nginx/sites-enabled/default
-ADD config/container/start-server.sh /usr/bin/start-server
-RUN chmod +x /usr/bin/start-server
-
 # Add rails project to project directory
 RUN mkdir -p /app/haikeuken
 
 # set WORKDIR
 WORKDIR /app/haikeuken
+
 # Add our current code...
-#ADD ./ /app/haikeuken
+ADD ./ /app/haikeuken
+ADD config/container/nginx-site.conf /etc/nginx/sites-enabled/default
+ADD config/container/start-server.sh /usr/bin/start-server
+
 # ... or clone latest upstream
-RUN git clone https://github.com/kallisti5/haikeuken.git .
+#RUN git clone https://github.com/kallisti5/haikeuken.git .
+#RUN cp /app/haikeuken/config/container/nginx-site.conf /etc/nginx/sites-enabled/default
+#RUN cp /app/haikeuken/onfig/container/start-server.sh /usr/bin/start-server
+
+# Make exec
+RUN chmod +x /usr/bin/start-server
 
 # bundle install
 RUN /bin/bash -l -c "bundle install"
