@@ -1,5 +1,5 @@
 ###
-# Enclose Haiku Package Build System in a docker container
+# Enclose Haikeuken in a docker container
 ###
 
 FROM ubuntu

@@ -1,8 +1,8 @@
 == README
 
-This is the Haiku Package Build System (hpbs)
+This is Haikeuken, the Haiku Package Build System.
 
-The hpbs instucts worker Haiku systems to build recipies and displays
+Haikeuken instucts worker Haiku systems to build recipies and displays
 recipe lint results
 
 === Requirements
