@@ -35,15 +35,18 @@ def getwork()
 end
 
 
-def putwork(result, buildlog, build_id)
+def putwork(status, buildlog, build_id)
 	uri = URI("#{@remote_uri}/putwork")
 
 	#req = Net::HTTP::Post.new(uri.request_uri)
 	#req.set_form_data('result' => result)
 
+	log = File.open(buildlog, "rb")
+
 	begin
 		Net::HTTP.post_form uri, {"token" => @settings['general']['token'],
-			"result" => result, "build_id" => build_id}
+			"status" => status, "build_id" => build_id,
+			"result" => log.read}
 		#Net::HTTP.start(uri.hostname, uri.port) do |http|
 		#	http.request(req)
 		#end
@@ -51,8 +54,10 @@ def putwork(result, buildlog, build_id)
 		puts "=========================================="
 		puts "Error: Server #{uri}"
 		puts "=========================================="
+		log.close
 		return nil
 	end
+	log.close
 end
 
 
@@ -84,10 +89,6 @@ end
 
 
 def loop()
-	# Disabled for testing
-	#puts "+ Refreshing repos..."
-	#refrepo()
-
 	puts "+ Checking for new work..."
 
 	work = getwork()
@@ -105,9 +106,9 @@ def loop()
 		puts "+ Work received"
 		worklog = "/tmp/#{task['name']}-#{task['version']}-#{task['revision']}.log"
 		puts "+ Building #{task['name']}-#{task['version']}-#{task['revision']}"
-		#result = system "#{@settings['general']['work_path']}/haikuporter/haikuporter #{@porter_arguments} #{task['name']}-#{task['version']} &> #{worklog}"
-		result = false
-		putwork(result, worklog, task['id'])
+		result = system "#{@settings['general']['work_path']}/haikuporter/haikuporter #{@porter_arguments} #{task['name']}-#{task['version']} &> #{worklog}"
+		status = result ? "OK" : "Fail"
+		putwork(status, worklog, task['id'])
     end
 end
 
@@ -125,6 +126,10 @@ end
 Dir.chdir(@settings['general']['work_path'])
 	
 while(1)
+	# Disabled for testing
+	#puts "+ Refreshing repos..."
+	#refrepo()
+
 	loop()
 	puts "+ Resting for #{@rest_period} seconds..."
 	sleep(@rest_period)
