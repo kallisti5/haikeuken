@@ -1,18 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Architecture:</strong>
-  <%= @build.architecture['name'] %>
-</p>
+<div class="title">
+  <span id="major">Build #<%=@build.id %></span><br/>
+  <span id="minor">Recipe <%=@build.recipe['name']%> on builder <%=@build.builder['hostname']%> (<%=@build.architecture['name']%>)</span>
+</div>
 
 <p>
-  <strong>Builder:</strong>
-  <%= @build.builder['hostname'] %>
-</p>
-
-<p>
-  <strong>Recipe:</strong>
-  <%= @build.recipe['name'] %>
+  <strong>Status:</strong>
+  <%=image_tag "icons/#{@build.status.downcase}.png"%>
+  <%if @build.status.downcase == "failure"%>
+  <span style="font-weight: bold; color: red;">
+  <%elsif @build.status.downcase == "building"%>
+  <span style="font-weight: bold; color: blue;">
+  <%else%>
+  <span style="font-weight: bold; color: green;">
+  <%end%>
+  <%= @build.status %></span>
 </p>
 
 <p>
@@ -22,17 +25,14 @@
 
 <p>
   <strong>Completed:</strong>
-  <%= @build.completed %>
+  <%= @build.completed ? @build.completed : "never"%>
 </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= image_tag "icons/#{@build.status.downcase}.png" %> <%= @build.status %>
-</p>
-
+<%if @build.result%>
 <p>
   <strong>Result:</strong>
   <pre><%= @build.result.gsub(/\n/, '<br>').html_safe %></pre>
 </p>
+<%end%>
 
 <%= link_to 'Back', builds_path %>
