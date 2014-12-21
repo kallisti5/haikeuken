@@ -2,13 +2,13 @@
 # Enclose Haikeuken in a docker container
 ###
 
-FROM ubuntu
+FROM fedora:latest
 
-RUN apt-get update -q
-RUN apt-get install -qy nginx postgresql-client libpq-dev
-RUN apt-get install -qy curl
-RUN apt-get install -qy nodejs
-RUN apt-get install -qy python
+RUN yum update -y
+RUN yum install -y nginx postgresql-client libpq-dev
+RUN yum install -y curl
+RUN yum install -y nodejs
+RUN yum install -y python
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Install rvm, ruby, bundler
@@ -23,10 +23,11 @@ ADD config/container/start-server.sh /usr/bin/start-server
 RUN chmod +x /usr/bin/start-server
 
 # Add rails project to project directory
-ADD ./ /rails
+RUN mkdir -p /app/haikeuken
+ADD ./ /app/haikeuken
 
 # set WORKDIR
-WORKDIR /rails
+WORKDIR /app/haikeuken
 
 # bundle install
 RUN /bin/bash -l -c "bundle install"
