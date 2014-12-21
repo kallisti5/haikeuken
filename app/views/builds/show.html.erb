@@ -32,7 +32,7 @@
 
 <p>
   <strong>Result:</strong>
-  <%= @build.result %>
+  <pre><%= @build.result.gsub(/\n/, '<br>').html_safe %></pre>
 </p>
 
 <%= link_to 'Back', builds_path %>

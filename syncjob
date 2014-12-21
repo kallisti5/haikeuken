@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /var/rails/hpbs
+
 export DATABASE_URL="postgres://izgtkkdgfinfqy:91-2u13vuEQrTfp2V0vlEJhF83@ec2-54-243-48-227.compute-1.amazonaws.com:5432/dedt9sd4a5v81o"
 
 rake recipe:sync

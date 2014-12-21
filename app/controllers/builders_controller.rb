@@ -26,7 +26,9 @@ class BuildersController < ApplicationController
 
     @builder.update(:lastheard => Time.now)
 	build = Build.find(params[:build_id])
-	build.update(:completed => Time.now, :status => (params[:result] == "true") ? "Success" : "Failure")
+	build.update(:completed => Time.now,
+		:status => (params[:status] == "OK") ? "Success" : "Failure",
+		:result => params[:result])
 
 	redirect_to "/"
   end
@@ -123,6 +125,6 @@ class BuildersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def builder_params
-      params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token, :result, :build_id)
+      params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token, :result, :status, :build_id)
     end
 end
