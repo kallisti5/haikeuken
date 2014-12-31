@@ -36,8 +36,8 @@ You will like want to automate these rake tasks to keep current data
 
 * Execute 'bundle install' to install the needed gems
 * Perform a rake db:migrate to create and seed the database
-* Modify your config/environments/*.rb environment to match the location
-  of your haikuports repo and haikuporter repo
+* Validate config/environments/*.rb contains the proper haikuporter and
+  haikuports repos
 * Start the server using 'rails server' or by launching it through unicorn
 * Perform a rake recipe:sync to pull all of the recipes into the database
 * Perform a rake recipe:lint to perform a haikuporter lint on each recipe
