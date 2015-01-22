@@ -22,6 +22,6 @@ fi;
 export DATABASE_URL;
 
 cd $APP_PATH
-rake recipe:sync
-rake recipe:lint
-rake package:sync
+bundle exec rake recipe:sync
+bundle exec rake recipe:lint
+bundle exec rake package:sync
