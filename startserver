@@ -1,0 +1,25 @@
+#!/bin/bash
+
+APP_PATH="/opt/apps/haikeuken"
+VALID_DATABASES="postgres"
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 <database_url>"
+	echo ""
+	echo " Where database_url is:"
+	echo "   - postgres://username:password@host:5432/database"
+	echo ""
+	exit 1
+fi
+
+DATABASE_URL="$1"
+
+if [[ $(echo "$DATABASE_URL" | cut -d':' -f1 | egrep "$VALID_DATABASES" | wc -l) -lt 1 ]]; then
+	echo "Not a valid database URL"
+	exit 1;
+fi;
+
+export DATABASE_URL;
+
+cd $APP_PATH
+bundle exec unicorn_rails -c config/unicorn.rb -D
