@@ -25,7 +25,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # Syntax highlighting of recipe files
-gem 'coderay'
+gem 'coderay', :path => "vendor/gems/coderay-1.1.0"
 
 # For executing haikuporter
 gem 'open4'
