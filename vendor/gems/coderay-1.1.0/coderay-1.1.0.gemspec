@@ -74,6 +74,7 @@ files:
 - lib/coderay/scanners/php.rb
 - lib/coderay/scanners/python.rb
 - lib/coderay/scanners/raydebug.rb
+- lib/coderay/scanners/recipe.rb
 - lib/coderay/scanners/ruby.rb
 - lib/coderay/scanners/ruby/patterns.rb
 - lib/coderay/scanners/ruby/string_state.rb

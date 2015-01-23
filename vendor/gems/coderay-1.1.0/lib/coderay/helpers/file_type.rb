@@ -114,6 +114,7 @@ module CodeRay
       'raydebug'  => :raydebug,
       'rb'        => :ruby,
       'rbw'       => :ruby,
+      'recipe'    => :recipe,
       'rhtml'     => :erb,
       'rjs'       => :ruby,
       'rpdf'      => :ruby,

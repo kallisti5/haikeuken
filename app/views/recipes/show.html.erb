@@ -82,7 +82,9 @@
 <div class="subtitle">
   <span id="major">Current Recipe</span><br/>
 </div>
-<%=raw CodeRay.highlight_file("#{Rails.root.join("tmp")}/repos/ports.git#{@recipe.filename}") %>
+<div class="CodeRay"><pre>
+<%=raw CodeRay.scan_file("#{Rails.root.join("tmp")}/repos/ports.git#{@recipe.filename}", :recipe).html %>
+</pre></div>
 
 <div class="subtitle">
   <span id="major">Lint Results</span><br/>
