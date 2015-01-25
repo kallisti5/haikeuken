@@ -42,12 +42,14 @@
 				<td style="background-color: <%= cycle('#F2F2F2', '#ffffff') -%>;">
 				<% if package.latestrev == 0 %>
 					<%= image_tag "icons/box-missing.png" %>
+					<br/>N/A
 				<% elsif package.latestrev == @recipe.revision %>
 					<%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %>
+					<br/>Revision <%= package.latestrev %>
 				<% else %>
 					<%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %>
-                <% end %>
-				<br/>Revision <%= package.latestrev %>
+					<br/>Revision <%= package.latestrev %>
+				<% end %>
 				</td>
 			<%-end-%>
 		</tr>
