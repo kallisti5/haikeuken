@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   #match '/builders(/:hostname)/getwork', :action => 'getwork', via: [:get], :controller => :builders
 
   resources :repos
-  resources :recipes, :only => [:index, :show], :id => /[A-Za-z0-9\.\-\_]+?/, :format => false
+  resources :recipes, :only => [:index, :show], :id => /[A-Za-z0-9\.\-_\+~]+?/, :format => false
 
   root 'recipes#index'
 end
