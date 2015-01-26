@@ -11,4 +11,9 @@ class Recipe < ActiveRecord::Base
       all.order([:category, :name, :version])
     end
   end
+
+  def to_param
+    #"#{name}-#{version.parameterize("_")}"
+    "#{name}-#{version}"
+  end
 end
