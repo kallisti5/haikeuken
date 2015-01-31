@@ -45,3 +45,7 @@ You will like want to automate these rake tasks to keep current data
 * Perform a rake package:sync to scan remote repos for packages
 * Schedule a refresh of the haikuporter and haikuports repos
 * Schedule a rake recipe:sync,lint and package:sync.
+
+=== Builders
+
+* Client builders can be found in the haikeuken-client repo
