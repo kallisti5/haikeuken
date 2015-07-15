@@ -81,6 +81,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.haikuports = 'https://bitbucket.org/haikuports/haikuports.git'
-  config.haikuporter = 'https://bitbucket.org/haikuports/haikuporter.git'
+  config.haikuports = 'https://github.com/haikuports/haikuports.git'
+  config.haikuporter = 'https://github.com/haikuports/haikuporter.git'
 end
