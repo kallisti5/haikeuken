@@ -61,6 +61,11 @@ namespace :recipe do
 			file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", "")
 			category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
 
+			if !category_info
+				puts "Error! Unknown category for #{file.to_s}\n"
+				next
+			end
+
 			recipe = {
 				:name => name_info[:name],
 				:version => name_info[:version],
