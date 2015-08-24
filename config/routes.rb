@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'help/builds'
   get 'help', :to => 'help#index'
 
+  mount Buildmeister::API => '/'
+
   resources :builds
   resources :builders
 

@@ -12,6 +12,11 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
+# Micro-API
+gem 'grape'
+gem 'hashie-forbidden_attributes'
+
+# Pages n' stuff
 gem 'kaminari'
 
 # Use jquery as the JavaScript library
