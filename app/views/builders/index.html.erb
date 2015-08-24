@@ -10,6 +10,7 @@
     <tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
       <th>Hostname</th>
       <th>Architecture</th>
+      <th>OS Build</th>
       <th>Owner</th>
       <th>Location</th>
       <th>Last seen</th>
@@ -20,7 +21,8 @@
     <% @builders.each do |builder| %>
       <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= link_to builder.hostname, builder %></td>
-        <td><%= builder.architecture['name'] %></td>
+        <td><%= (builder.architecture['name'] or "unknown")%></td>
+        <td><%= (builder.osbuild or "unknown") %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
         <% age = Time.now.to_i - builder.lastheard.to_i %>
