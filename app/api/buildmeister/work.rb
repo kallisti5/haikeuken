@@ -40,7 +40,6 @@ module Buildmeister
         }
         workitems.push(task)
       end
-
       workitems
     end
   end

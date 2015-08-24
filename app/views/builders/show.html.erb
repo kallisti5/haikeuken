@@ -2,7 +2,7 @@
 
 <div class="title">
   <span id="major"><%=@builder.hostname %></span><br/>
-  <span id="minor"><%=@builder.architecture.name%> package builder owned by <%=@builder.owner%></span>
+  <span id="minor"><%=@builder.architecture ? @builder.architecture.name : "unknown" %> package builder owned by <%=@builder.owner%></span>
 </div>
 
 <img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=4&size=650x200">
