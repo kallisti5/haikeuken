@@ -21,7 +21,7 @@
     <% @builders.each do |builder| %>
       <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
         <td><%= link_to builder.hostname, builder %></td>
-        <td><%= (builder.architecture['name'] or "unknown")%></td>
+        <td><%= (builder.architecture ? builder.architecture['name'] : "unknown")%></td>
         <td><%= (builder.osbuild or "unknown") %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
