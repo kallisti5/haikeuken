@@ -41,6 +41,7 @@ gem 'unicorn'
 
 # Postgresql database
 gem 'pg'
+gem 'sqlite3'
 
 # Performance testing
 gem 'ruby-prof'
