@@ -44,7 +44,16 @@ You will like want to automate these rake tasks to keep current data
 *   Schedule a ``rake recipe:sync``, ``rake recipe:lint``, and ``rake package:sync``.
 
 
-## Builders
+## Provisioning a new builder
+
+*   Execute ``rake builder:new[HOSTNAME,LOCATION,OWNER]`` to provision a new builder
+*   Take the resulting yaml and configure your agent with it
+
+## Destroying a builder
+
+*   Execute ``rake builder:destroy[HOSTNAME]`` to destroy a builder
+
+## Builder agent
 
 *   Client builders can be found in the haikeuken-client repo
 
