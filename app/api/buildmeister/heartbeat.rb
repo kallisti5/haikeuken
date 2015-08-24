@@ -15,7 +15,10 @@ module Buildmeister
       if !builder or params[:token] != builder['token']
         return {'Error' => 'Invalid access attempt!'}
       end
-      builder.update(lastheard: Time.now)
+      arch = Architecture.find_by(name: params[:architecture])
+      # TODO: If architecture changes, raise event?
+      # TODO: If osbuild changes, raise event?
+      builder.update(lastheard: Time.now, osbuild: params[:revision], architecture_id: arch[:id])
       {'Success' => 'Hello!'}
 	end
   end

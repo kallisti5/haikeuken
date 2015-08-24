@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126144557) do
+ActiveRecord::Schema.define(version: 20150824202733) do
 
   create_table "architectures", force: true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20141126144557) do
     t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "osbuild"
   end
 
   create_table "builds", force: true do |t|
