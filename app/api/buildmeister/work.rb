@@ -11,7 +11,7 @@ module Buildmeister
       builder = Builder.find_by(hostname: params[:hostname])
       if !builder or params[:token] != builder['token']
         # Invalid builder or token, redirect to root
-        return {'Error' => 'Invalid access attempt!'}
+        error!('401 Unauthorized', 401)
       end
 
       builder.update(:lastheard => Time.now)
