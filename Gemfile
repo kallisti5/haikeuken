@@ -12,6 +12,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
+gem 'kaminari'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -36,8 +38,8 @@ gem 'open4'
 # Paginate
 #gem 'will_paginate'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Puma middleware
+gem 'puma'
 
 # Postgresql database
 gem 'pg'
@@ -48,10 +50,6 @@ gem 'ruby-prof'
 
 # Manage git repos
 gem 'git'
-
-# Activeadmin interface
-gem 'activeadmin', git: "https://github.com/activeadmin/activeadmin.git"
-gem 'devise'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
