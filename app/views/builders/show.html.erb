@@ -8,7 +8,7 @@
 <img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=4&size=650x200">
 <p>
   <strong>Last seen:</strong>
-  <%= time_ago_in_words(@builder.lastheard) %> ago
+  <%= @builder.lastheard ? "#{time_ago_in_words(builder.lastheard)} ago" : "never" %>
 </p>
 
 <p>

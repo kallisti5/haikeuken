@@ -24,8 +24,8 @@
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
         <% age = Time.now.to_i - builder.lastheard.to_i %>
-        <td style="background-color:<%= (age >= 21600) ? "#FF9999" : "#CCFF99" %>">
-        <%= time_ago_in_words(builder.lastheard) %></td>
+        <td style="background-color: <%= (age >= 21600) ? "#FF9999" : "#CCFF99" %>">
+        <%= builder.lastheard ? time_ago_in_words(builder.lastheard) : "never" %></td>
       </tr>
     <% end %>
   </tbody>
