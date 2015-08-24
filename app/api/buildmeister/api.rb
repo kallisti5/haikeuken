@@ -4,5 +4,6 @@ module Buildmeister
 		format :json
 		prefix :api
 		mount Buildmeister::Work
+		mount Buildmeister::Heartbeat
 	end
 end
