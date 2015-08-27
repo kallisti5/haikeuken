@@ -1,4 +1,4 @@
-module Buildmeister
+module V1
   class Heartbeat < Grape::API
     desc "Worker heartbeat"
     params do

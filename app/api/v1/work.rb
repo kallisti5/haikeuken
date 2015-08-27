@@ -1,4 +1,4 @@
-module Buildmeister
+module V1
   class Work < Grape::API
     desc "Get Work"
 	params do
