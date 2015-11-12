@@ -13,13 +13,13 @@
 
 ActiveRecord::Schema.define(version: 20150824202733) do
 
-  create_table "architectures", force: true do |t|
+  create_table "architectures", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "builders", force: true do |t|
+  create_table "builders", force: :cascade do |t|
     t.integer  "architecture_id"
     t.string   "hostname"
     t.string   "owner"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.string   "osbuild"
   end
 
-  create_table "builds", force: true do |t|
+  create_table "builds", force: :cascade do |t|
     t.integer  "architecture_id"
     t.integer  "builder_id"
     t.integer  "recipe_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.string   "status"
   end
 
-  create_table "packages", force: true do |t|
+  create_table "packages", force: :cascade do |t|
     t.integer  "recipe_id"
     t.integer  "repo_id"
     t.integer  "architecture_id"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.datetime "updated_at"
   end
 
-  create_table "recipes", force: true do |t|
+  create_table "recipes", force: :cascade do |t|
     t.string   "name"
     t.string   "version"
     t.integer  "revision"
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "category"
-    t.text     "lint",       limit: 255
+    t.text     "lint"
     t.integer  "lintret"
   end
 
-  create_table "repos", force: true do |t|
+  create_table "repos", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
     t.datetime "lastrefresh"
