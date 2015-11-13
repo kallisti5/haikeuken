@@ -1,7 +1,14 @@
 /* Core Stylesheets */
-@import "default";
-@import "scaffolds";
-@import "recipes";
+//@import "default";
+//@import "scaffolds";
+//@import "recipes";
+
+@import "bootstrap-sprockets";
+@import "bootswatch/cerulean/variables";
+@import "bootstrap";
+@import "bootswatch/cerulean/bootswatch";
+
+//@import "base";
 
 /* Gem Stylesheets */
 @import "coderay";

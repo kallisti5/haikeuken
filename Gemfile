@@ -16,6 +16,9 @@ gem 'therubyracer',  platforms: :ruby
 gem 'grape'
 gem 'hashie-forbidden_attributes'
 
+gem 'bootstrap-sass'
+gem 'bootswatch-rails'
+
 # Pages n' stuff
 gem 'kaminari'
 

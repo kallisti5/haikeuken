@@ -12,9 +12,9 @@
 </div>
 
 <center>
-<table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
+<table class="table table-striped table-hover" style='width: 100%;'>
   <thead>
-	<tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
+	<tr>
 		<th>Name</th>
 		<th width="128px">Category</th>
 		<th width="256px">Version</th>
@@ -27,7 +27,7 @@
 
   <tbody>
     <% @recipes.each do |recipe| %>
-      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
+      <tr>
         <td><%= image_tag "icons/document-task.png" %><%= link_to recipe.name, recipe %></td>
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>

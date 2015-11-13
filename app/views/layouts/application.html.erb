@@ -7,35 +7,35 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'pagination.css' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 
 <body>
-<div id="header" class="container">
-    <div id="logo">
-        <%= image_tag 'packageinstaller-icon_64.png' %><a href="/">HaiKeuken</a></h1>
-    </div>
-    <div id="menu">
-        <ul>
-            <li <%= params[:controller] == 'recipes' ? "class=active" : nil %>><%= link_to "Recipes", :recipes %>
-            <li <%= params[:controller] == 'builders' ? "class=active" : nil %>><%= link_to "Builders", :builders %>
-            <li <%= params[:controller] == 'builds' ? "class=active" : nil %>><%= link_to "Builds", :builds %>
-            <li <%= params[:controller] == 'help' ? "class=active" : nil %>><%= link_to "Help", :help %>
-        </ul>
-    </div>
-</div>
-
-<div id="page">
+  <div class="navbar navbar-default navbar-static-top">
     <div class="container">
-    <%= yield %>
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand"><%= image_tag 'packageinstaller-icon_64.png', {:size => "24x24", :style => "display: inline-block" } %> Haikeuken</a>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li <%= params[:controller] == 'recipes' ? "class=active" : nil %>><%= link_to "Recipes", :recipes %></li>
+          <li <%= params[:controller] == 'builders' ? "class=active" : nil %>><%= link_to "Builders", :builders %></li>
+          <li <%= params[:controller] == 'builds' ? "class=active" : nil %>><%= link_to "Builds", :builds %></li>
+          <li <%= params[:controller] == 'help' ? "class=active" : nil %>><%= link_to "Help", :help %></li>
+        </ul>
+      </div>
     </div>
-</div>
+  </div>
+ 
+  <div class="container">
+  <%= yield %>
+  </div>
 
-<div id="copyright" class="container">
-    <p>&copy; Alexander von Gluck IV. All rights reserved.</p>
-</div>
+  <div id="copyright" class="container">
+    <p style='color: #ccc;'>&copy; Alexander von Gluck IV. All rights reserved.</p>
+  </div>
 </body>
 </html>
