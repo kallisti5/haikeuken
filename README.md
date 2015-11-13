@@ -16,9 +16,9 @@ lint results
 
 ## Important commands
 
-*   ``rake db:reset`` - Empty the database
-*   ``rake db:migrate`` -  Create the database
-*   ``rake db:seed`` -  Populate some basic data to get started
+*   ``rake db:reset``   - Empty the database
+*   ``rake db:migrate`` - Create the database
+*   ``rake db:seed``    - Populate some basic data to get started
 
 
 ### Automated jobs
@@ -33,8 +33,6 @@ You will like want to automate these rake tasks to keep current data
 
 *   Execute ``bundle install`` to install the needed gems
 *   Perform a ``rake db:migrate`` to create and seed the database
-*   Modify your config/environments/ environment to match the location of
-    your haikuports repo and haikuporter repo
 *   Start the server using ``bundle exec puma``
 *   Perform a ``rake recipe:sync`` to pull all of the recipes into the database
 *   Perform a ``rake recipe:lint`` to perform a haikuporter lint on each recipe

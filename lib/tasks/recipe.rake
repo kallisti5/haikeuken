@@ -6,7 +6,7 @@ namespace :recipe do
 	porter_config = [ "TREE_PATH=\"#{Rails.root.join("tmp")}/repos/ports.git\"\n",
 		"PACKAGER=\"Haiku Kitchen <admin@haikungfu.net>\"\n",
 		"TARGET_ARCHITECTURE=\"x86\"\n",
-		"LICENSES_DIRECTORY=\"#{Rails.root.join("tmp")}/licenses\"\n" ]
+		"LICENSES_DIRECTORY=\"#{Rails.root.join("public")}/licenses\"\n" ]
 
 	File.open("#{Rails.root.join("tmp")}/ports.conf", "w") do |f|
 		porter_config.each do |row| f << row end
