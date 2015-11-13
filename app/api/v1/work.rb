@@ -16,7 +16,7 @@ module V1
 
       builder.update(:lastheard => Time.now)
 
-      workitems = []
+      workitems = Array.new
       Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: builder.architecture).each do |package|
 
         # Limit to one workitem for now
@@ -40,7 +40,11 @@ module V1
         }
         workitems.push(task)
       end
-      workitems
+      if workitems.count > 0
+        return {"result" => "available", "tasks" => workitems}
+      else
+        return {"result" => "none"}
+      end
     end
   end
 end
