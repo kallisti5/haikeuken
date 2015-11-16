@@ -1,101 +1,119 @@
 <p id="notice"><%= notice %></p>
 
-<div class="title">
-  <span id="major"><%=@recipe.name %></span><br/>
-  <span id="minor"><%= @recipe.version %> (revision <%= @recipe.revision %>)</span>
-</div>
+<div class='row'>
+  <div class='col-md-12'>
+    <span style="font-size: 1.5em; font-weight: bold;"><%=@recipe.name %></span>
+    <span style="font-size: 0.8em"><%= @recipe.version %> (revision <%= @recipe.revision %>)</span>
+  </div>
+</div> <!-- row -->
 
-<div style="width: 100%; display: inline-block;">
-  <div style="float: left; width: 70%; padding-right: 5px">
-    <div class="subtitle">
-      <span id="major">Information</span><br/>
-    </div>
-    <div class="CodeRay">
-      <div style="padding: 10px;">
-        <strong>Category:</strong>
-        <%= @recipe.category %><br/>
-        <strong>Filename:</strong>
-        <%= @recipe.filename %><br/>
-        <strong>Lint:</strong>
-        <%=raw @recipe[:lintret] == 0 ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+<div class='row'>
+  <div class='col-md-7'>
+    <div class="panel panel-default">
+  	<div class="panel-heading">Information</div>
+  	<div class="panel-body">
+        <div style="padding: 10px;">
+          <strong>Category:</strong>
+          <%= @recipe.category %><br/>
+          <strong>Filename:</strong>
+          <%= @recipe.filename %><br/>
+          <strong>Lint:</strong>
+          <%=raw @recipe[:lintret] == 0 ? "<span style='color: green'>Passing</span>" : "<span style='color: red'>Failing</span>" %>
+        </div>
       </div>
     </div>
   </div>
-
-  <div style='float: right; width: 29%'>
-    <div class="subtitle">
-      <span id="major">Packages</span><br/>
+  
+  <div class='col-md-5'>
+    <div class="panel panel-default">
+      <div class="panel-heading">Packages</div>
+      <div class="panel-body">
+        <table class="table table-striped-column table-condensed" style='width: 100%; margin-bottom: 0px;'>
+          <thead>
+            <tr>
+  			<% @architectures.each do |arch| %>
+  			  <th style="text-align: center;"><b><%= arch.name %></b></th>
+  			<% end %>
+            </tr>
+          </thead>
+          <tbody>
+  		    <tr>
+  		      <% @recipe.packages.joins(:architecture).each do | package | %>
+  		        <% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
+  		        <% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
+  		        <td style="text-align: center;">
+  		        <% if package.latestrev == 0 %>
+  		        	<%= image_tag "icons/box-missing.png" %>
+  		        	<br/>N/A
+  		        <% elsif package.latestrev == @recipe.revision %>
+  		        	<%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %>
+  		        	<br/>Revision <%= package.latestrev %>
+  		        <% else %>
+  		        	<%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %>
+  		        	<br/>Revision <%= package.latestrev %>
+  		        <% end %>
+  		        </td>
+  		      <%-end-%>
+  		    </tr>
+  	      </tbody>
+        </table>
+      </div>
     </div>
-  <table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
-	<thead>
-		<tr style="font-size: 0.8em; text-align: center; background-color: #aaaaaa;">
-			<% @architectures.each do |arch| %>
-				<td style="background-color: <%= cycle('#cccccc', '#dddddd') -%>;"><b><%= arch.name %></b></td>
-			<% end %>
-		</tr>
-	</thead>
-	<tbody>
-		<tr style="font-size: 0.9em; text-align: center; background-color: <%= cycle('#eee', '#fff') -%>;">
-			<% @recipe.packages.joins(:architecture).each do | package | %>
-				<% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
-				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
-				<td style="background-color: <%= cycle('#F2F2F2', '#ffffff') -%>;">
-				<% if package.latestrev == 0 %>
-					<%= image_tag "icons/box-missing.png" %>
-					<br/>N/A
-				<% elsif package.latestrev == @recipe.revision %>
-					<%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %>
-					<br/>Revision <%= package.latestrev %>
-				<% else %>
-					<%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %>
-					<br/>Revision <%= package.latestrev %>
-				<% end %>
-				</td>
-			<%-end-%>
-		</tr>
-	</tbody>
-</table>
-</div>
-</div>
+  </div>
+</div> <!-- end row -->
 
-<div class="subtitle">
-  <span id="major">Builds Results</span><br/>
-</div>
-<table style="border: 1px solid black; border-spacing: 0px; table-layout: fixed; width: 100%">
-	<thead>
-		<tr style="font-size: 0.8em; background-color: #cccccc;">
-			<td>Build</td><td>Builder</td><td>Architecture</td><td>Start date</td><td>End date</td><td>Result</td>
-		</tr>
-	</thead>
-	<tbody>
-	<% @recipe.builds.order('issued DESC').each do | build | %>
-	<tr style="background-color: <%= cycle('#f2f2f2', '#ffffff') -%>;">
-		<td><%= link_to "##{build['id']}", build %></td>
-		<td><%= link_to build.builder['hostname'], build.builder %></td>
-		<td><%= build.architecture['name'] %></td>
-		<td><%= build['issued'] %></td>
-		<td><%= build['completed'] %></td>
-		<td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
-	</tr>
-	<% end %>
-	</tbody>
-</table>
+<div class="row">
+  <div class='col-md-12'>
+    <div class="panel panel-default">
+      <div class="panel-heading">Builds Results</div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover table-condensed" style='width: 100%;'>
+          <thead>
+        	<tr>
+              <td>Build</td><td>Builder</td><td>Architecture</td><td>Start date</td><td>End date</td><td>Result</td>
+            </tr>
+          </thead>
+          <tbody>
+              <% if @recipe.builds.count == 0 %>
+              <tr><td colspan=6><center>No builds found</center></td></tr>
+              <% end %>
+        	  <% @recipe.builds.order('issued DESC').each do | build | %>
+        	  <tr>
+              <td><%= link_to "##{build['id']}", build %></td>
+              <td><%= link_to build.builder['hostname'], build.builder %></td>
+              <td><%= build.architecture['name'] %></td>
+              <td><%= build['issued'] %></td>
+              <td><%= build['completed'] %></td>
+              <td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
+            </tr>
+        	  <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> <!-- row -->
 
-<div class="subtitle">
-  <span id="major">Current Recipe</span><br/>
-</div>
-<div class="CodeRay"><pre>
-<%=raw CodeRay.scan_file("#{Rails.root.join("tmp")}/repos/ports.git#{@recipe.filename}", :recipe).html %>
-</pre></div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Current Recipe</div>
+      <div class="panel-body">
+        <div class="CodeRay">
+        <pre><%=raw CodeRay.scan_file("#{Rails.root.join("tmp")}/repos/ports.git#{@recipe.filename}", :recipe).html %></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- row -->
 
-<div class="subtitle">
-  <span id="major">Lint Results</span><br/>
-</div>
-<div class="CodeRay">
-<div style="padding: 10px;">
-<%=raw @recipe[:lintret] ? @recipe[:lint] : "<span style='color: red; font-weight: bold'> Error: Missing lint data!</span>" %>
-</div>
-</div>
-
-</div>
-</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Lint Results</div>
+      <div class="panel-body">
+        <%=raw @recipe[:lintret] ? @recipe[:lint] : "<span style='color: red; font-weight: bold'> Error: Missing lint data!</span>" %>
+      </div>
+    </div>
+  </div>
+</div> <!-- row -->

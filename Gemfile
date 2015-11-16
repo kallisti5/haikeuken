@@ -12,6 +12,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
+gem 'bullet', :group => "development"
+
 # Micro-API
 gem 'grape'
 gem 'hashie-forbidden_attributes'
