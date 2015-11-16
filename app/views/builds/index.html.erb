@@ -6,9 +6,9 @@
 </div>
 
 <center>
-<table style="border: 1px solid black; width: 100%; border-spacing: 0px; margin-bottom: 3px;">
+<table class="table table-striped table-hover table-condensed" style='width: 100%;'>
   <thead>
-    <tr style="font-size: 1.0em; text-align: left; background-color: #cccccc;">
+    <tr>
       <th>Architecture</th>
       <th>Builder</th>
       <th>Recipe</th>
@@ -22,7 +22,7 @@
 
   <tbody>
     <% @builds.each do |build| %>
-      <tr style="font-size: 1.0em; background-color: <%= cycle('#eeeeee', '#ffffff') -%>;">
+      <tr>
         <td><%= build.architecture['name'] %></td>
         <td><%= link_to build.builder['hostname'], build.builder %></td>
         <td><%= link_to build.recipe['name'], build.recipe %></td>
