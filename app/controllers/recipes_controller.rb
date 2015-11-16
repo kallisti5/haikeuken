@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.search(params[:search]).includes(:packages).includes(:architectures).page(params[:page])
+    @recipes = Recipe.includes(packages: [:repo, :architecture]).search(params[:search]).page(params[:page])
     @architectures = Architecture.all
   end
 
@@ -19,9 +19,9 @@ class RecipesController < ApplicationController
     def set_recipe
       query = params[:id].split("-")
       if !query[1]
-        @recipe = Recipe.where(name: query[0]).order("version DESC").first
+        @recipe = Recipe.where(name: query[0]).includes(packages: [:repo, :architecture]).order("version DESC").first
       else
-        @recipe = Recipe.find_by(name: query[0], version: query[1])
+        @recipe = Recipe.includes(packages: [:repo, :architecture]).find_by(name: query[0], version: query[1])
       end
       if !@recipe
         # Invalid builder or token, redirect to root
