@@ -1,5 +1,5 @@
 namespace :package do
-  desc "Syncs the database of packages with a repo"
+  desc 'Syncs the database of packages with a repo'
   task sync: :environment do
     require 'net/http'
 
@@ -12,7 +12,7 @@ namespace :package do
 
     repositories.each do |repo|
       url = URI.parse(repo[:url])
-      puts repo[:name] + "..."
+      puts repo[:name] + '...'
       recipes.each do |recipe|
         architectures.each do |arch|
           rev = recipe['revision'].to_i

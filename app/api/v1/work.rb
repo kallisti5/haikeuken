@@ -1,6 +1,6 @@
 module V1
   class Work < Grape::API
-    desc "Get Work"
+    desc 'Get Work'
     params do
       requires :hostname, type: String
       requires :token, type: String
@@ -17,7 +17,7 @@ module V1
       builder.update(lastheard: Time.now)
 
       workitems = Array.new
-      Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: builder.architecture).each do |package|
+      Package.joins(:recipe).where('packages.latestrev < recipes.revision').where(architecture: builder.architecture).each do |package|
 
         # Limit to one workitem for now
         # Could this be done in the query?
@@ -27,7 +27,7 @@ module V1
         # Schedule the build for this builder
         build = Build.create(architecture: package.architecture,
           builder: builder, recipe: package.recipe, issued: Time.now,
-          status: "Building")
+          status: 'Building')
 
         # last seen built revision is outdated
         # add work to tasks
@@ -41,9 +41,9 @@ module V1
         workitems.push(task)
       end
       if workitems.count > 0
-        return {"result" => "available", "tasks" => workitems}
+        return {'result' => 'available', 'tasks' => workitems}
       else
-        return {"result" => "none"}
+        return {'result' => 'none'}
       end
     end
   end

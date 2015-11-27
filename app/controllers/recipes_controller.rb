@@ -17,15 +17,15 @@ class RecipesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
   def set_recipe
-    query = params[:id].split("-")
+    query = params[:id].split('-')
     if !query[1]
-      @recipe = Recipe.where(name: query[0]).includes(packages: [:repo, :architecture]).order("version DESC").first
+      @recipe = Recipe.where(name: query[0]).includes(packages: [:repo, :architecture]).order('version DESC').first
     else
       @recipe = Recipe.includes(packages: [:repo, :architecture]).find_by(name: query[0], version: query[1])
     end
     if !@recipe
       # Invalid builder or token, redirect to root
-      redirect_to "/", notice: "Package by that name not found!"
+      redirect_to '/', notice: 'Package by that name not found!'
       return
     end
   end

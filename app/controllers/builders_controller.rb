@@ -20,31 +20,31 @@ class BuildersController < ApplicationController
   def putwork
     if !@builder or params[:token] != @builder['token']
       # Invalid builder or token, redirect to root
-      redirect_to "/", notice: 'Invalid builder API call!'
+      redirect_to '/', notice: 'Invalid builder API call!'
       return
     end
 
     @builder.update(lastheard: Time.now)
     build = Build.find(params[:build_id])
     build.update(completed: Time.now,
-      status: (params[:status] == "OK") ? "Success" : "Failure",
+      status: (params[:status] == 'OK') ? 'Success' : 'Failure',
       result: params[:result])
 
-    redirect_to "/"
+    redirect_to '/'
   end
 
   # GET /builders/hostname/getwork
   def getwork
     if !@builder or params[:token] != @builder['token']
       # Invalid builder or token, redirect to root
-      redirect_to "/", notice: 'Invalid builder API call!'
+      redirect_to '/', notice: 'Invalid builder API call!'
       return
     end
 
     @builder.update(lastheard: Time.now)
 
     workitems = []
-    Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: @builder.architecture).each do |package|
+    Package.joins(:recipe).where('packages.latestrev < recipes.revision').where(architecture: @builder.architecture).each do |package|
 
       # Limit to one workitem for now
       # Could this be done in the query?
@@ -54,7 +54,7 @@ class BuildersController < ApplicationController
       # Schedule the build for this builder
       build = Build.create(architecture: package.architecture,
         builder: @builder, recipe: package.recipe, issued: Time.now,
-        status: "Building")
+        status: 'Building')
 
       # last seen built revision is outdated
       # add work to tasks

@@ -1,5 +1,5 @@
 namespace :build do
-  desc "Cleans up builds that have timed out"
+  desc 'Cleans up builds that have timed out'
   task clean: :environment do
     now = Time.now
     Build.where(completed: nil).each do |build|
@@ -7,7 +7,7 @@ namespace :build do
         puts "#{build.recipe[:name]} has expired, removing..."
         build.destroy
       elsif now.to_i - build.issued.to_i > 21600
-        build.update(status: "Timeout")
+        build.update(status: 'Timeout')
       end
     end
   end

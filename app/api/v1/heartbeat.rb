@@ -1,6 +1,6 @@
 module V1
   class Heartbeat < Grape::API
-    desc "Worker heartbeat"
+    desc 'Worker heartbeat'
     params do
       requires :hostname, type: String
       requires :token, type: String

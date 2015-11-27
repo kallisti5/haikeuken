@@ -1,5 +1,5 @@
 namespace :recipe do
-  desc "Syncs the applications database of recipes with haikuports"
+  desc 'Syncs the applications database of recipes with haikuports'
   task sync: :environment do
     require 'find'
 
@@ -8,48 +8,48 @@ namespace :recipe do
       "TARGET_ARCHITECTURE=\"x86\"\n",
       "LICENSES_DIRECTORY=\"#{Rails.root.join("public")}/licenses\"\n" ]
 
-    File.open("#{Rails.root.join("tmp")}/ports.conf", "w") do |f|
+    File.open("#{Rails.root.join("tmp")}/ports.conf", 'w') do |f|
       porter_config.each do |row| f << row end
     end
 
-    puts "================================"
-    puts "Syncing database with Haikuports"
-    puts "================================"
+    puts '================================'
+    puts 'Syncing database with Haikuports'
+    puts '================================'
     puts "Repo: #{Rails.application.config.haikuports}"
 
     Dir.mkdir("#{Rails.root.join("tmp")}/repos") unless File.directory?("#{Rails.root.join("tmp")}/repos")
 
-    puts "Refreshing Haikuports tree..."
+    puts 'Refreshing Haikuports tree...'
     begin
       haikuports = Git.open("#{Rails.root.join("tmp")}/repos/ports.git")
     rescue
-      puts "No cached port repo found, cloning..."
+      puts 'No cached port repo found, cloning...'
       haikuports = Git.clone(Rails.application.config.haikuports,
         "#{Rails.root.join("tmp")}/repos/ports.git", bare: false)
     end
-    puts "Pulling upstream port updates..."
-    haikuports.remote("origin").fetch
+    puts 'Pulling upstream port updates...'
+    haikuports.remote('origin').fetch
     haikuports.pull
 
-    puts "Refreshing Haikuporter..."
+    puts 'Refreshing Haikuporter...'
     begin
       haikuporter = Git.open("#{Rails.root.join("tmp")}/repos/porter.git")
     rescue
-      puts "No cached porter repo found, cloning..."
+      puts 'No cached porter repo found, cloning...'
       haikuporter = Git.clone(Rails.application.config.haikuporter,
         "#{Rails.root.join("tmp")}/repos/porter.git", bare: false)
     end
-    puts "Pulling port tool updates..."
-    haikuporter.remote("origin").fetch
+    puts 'Pulling port tool updates...'
+    haikuporter.remote('origin').fetch
     haikuporter.pull
 
   # Parse each recipe for info, build repo_recipes
-    puts "Searching tree for updates / changes..."
+    puts 'Searching tree for updates / changes...'
     repo_recipes = []
     Find.find(haikuports.dir.to_s) do |path_file|
       file_name = File.basename(path_file)
       if file_name =~ /^.*-.*\.recipe$/
-          recipe_file = File.basename(path_file, ".recipe")
+          recipe_file = File.basename(path_file, '.recipe')
           name_info = /^(?<name>\S*)-(?<version>.*)$/.match(recipe_file)
   
           revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
@@ -58,7 +58,7 @@ namespace :recipe do
             revision_info = { value: 0 }
           end
     
-          file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", "")
+          file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", '')
           category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
   
           if !category_info
@@ -104,17 +104,17 @@ namespace :recipe do
 
     orphan_recipes.each do | orphan |
       puts "Removing orphan recipe #{orphan}..."
-      info = orphan.split("-")
+      info = orphan.split('-')
       Recipe.destroy_all(name: info[0], version:  info[1])
     end
 
   end
 
-  desc "Performs a lint scan of the current recipes"
+  desc 'Performs a lint scan of the current recipes'
   task lint: :environment do
-  puts "================================"
-  puts "Running lint on recipies"
-  puts "================================"
+  puts '================================'
+  puts 'Running lint on recipies'
+  puts '================================'
   puts "Repo: #{Rails.application.config.haikuports}"
   puts "Porter: #{Rails.application.config.haikuporter}"
 
@@ -132,7 +132,7 @@ namespace :recipe do
   end
   end
 
-  desc "Empties the applicaions database of recipes"
+  desc 'Empties the applicaions database of recipes'
   task clear: :environment do
   end
 
