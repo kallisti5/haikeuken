@@ -49,7 +49,7 @@ namespace :recipe do
     Find.find(haikuports.dir.to_s) do |path_file|
       file_name = File.basename(path_file)
       if file_name =~ /^.*-.*\.recipe$/
-          recipe_file = File.basename(path_file, '.recipe')
+        recipe_file = File.basename(path_file, '.recipe')
           name_info = /^(?<name>\S*)-(?<version>.*)$/.match(recipe_file)
   
           revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
@@ -100,7 +100,7 @@ namespace :recipe do
     db_hashmap = Hash[db_recipes.map { |x| ["#{x.name}-#{x.version}"] }]
     fs_hashmap = Hash[repo_recipes.map { |x| ["#{x[:name]}-#{x[:version]}"] }]
 
-    orphan_recipes = db_hashmap.keys - fs_hashmap.keys;
+    orphan_recipes = db_hashmap.keys - fs_hashmap.keys
 
     orphan_recipes.each do | orphan |
       puts "Removing orphan recipe #{orphan}..."
@@ -112,7 +112,7 @@ namespace :recipe do
 
   desc 'Performs a lint scan of the current recipes'
   task lint: :environment do
-  puts '================================'
+    puts '================================'
   puts 'Running lint on recipies'
   puts '================================'
   puts "Repo: #{Rails.application.config.haikuports}"
@@ -121,7 +121,7 @@ namespace :recipe do
   require 'open4'
   @recipes = Recipe.all
   @recipes.each do |recipe|
-      puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
+    puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
       pid, stdin, stdout, stderr = Open4.popen4("#{Rails.root.join("tmp")}/repos/porter.git/haikuporter" \
           " --config=#{Rails.root.join("tmp")}/ports.conf" \
           " --lint #{recipe[:name]}-#{recipe[:version]}")
