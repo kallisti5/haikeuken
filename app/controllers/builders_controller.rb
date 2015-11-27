@@ -25,12 +25,12 @@ class BuildersController < ApplicationController
     end
 
     @builder.update(lastheard: Time.now)
-	build = Build.find(params[:build_id])
-	build.update(completed: Time.now,
-		status: (params[:status] == "OK") ? "Success" : "Failure",
-		result: params[:result])
+    build = Build.find(params[:build_id])
+    build.update(completed: Time.now,
+      status: (params[:status] == "OK") ? "Success" : "Failure",
+      result: params[:result])
 
-	redirect_to "/"
+    redirect_to "/"
   end
 
   # GET /builders/hostname/getwork
@@ -54,12 +54,12 @@ class BuildersController < ApplicationController
       # Schedule the build for this builder
       build = Build.create(architecture: package.architecture,
         builder: @builder, recipe: package.recipe, issued: Time.now,
-		status: "Building")
+        status: "Building")
 
       # last seen built revision is outdated
       # add work to tasks
       task = {
-		id: build[:id],
+        id: build[:id],
         name: package.recipe[:name],
         version: package.recipe[:version],
         revision: package.recipe[:revision],
@@ -113,18 +113,18 @@ class BuildersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_builder
-      @builder = Builder.find(params[:id])
-    end
+  def set_builder
+    @builder = Builder.find(params[:id])
+  end
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_builder_byhost
-      @builder = Builder.find_by(hostname: params[:hostname])
-    end
+  def set_builder_byhost
+    @builder = Builder.find_by(hostname: params[:hostname])
+  end
 
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def builder_params
-      params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token, :result, :status, :build_id)
-    end
+  def builder_params
+    params.require(:builder).permit(:architecture_id, :hostname, :owner, :location, :lastheard, :token, :result, :status, :build_id)
+  end
 end

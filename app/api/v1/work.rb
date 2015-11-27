@@ -1,11 +1,11 @@
 module V1
   class Work < Grape::API
     desc "Get Work"
-	params do
+    params do
       requires :hostname, type: String
       requires :token, type: String
- end
-	# http://localhost:9292/api/v1/work/test?token=123
+    end
+    # http://localhost:9292/api/v1/work/test?token=123
     # XXX: This should be a post
     get '/work/:hostname' do
       builder = Builder.find_by(hostname: params[:hostname])
