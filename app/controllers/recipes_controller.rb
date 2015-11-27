@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_recipe
     query = params[:id].split('-')
     if !query[1]
@@ -30,7 +30,7 @@ class RecipesController < ApplicationController
     end
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def recipe_params
     params.require(:recipe).permit(:name, :version, :revision, :filename)
   end

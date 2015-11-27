@@ -43,7 +43,7 @@ namespace :recipe do
     haikuporter.remote('origin').fetch
     haikuporter.pull
 
-  # Parse each recipe for info, build repo_recipes
+    # Parse each recipe for info, build repo_recipes
     puts 'Searching tree for updates / changes...'
     repo_recipes = []
     Find.find(haikuports.dir.to_s) do |path_file|
@@ -79,7 +79,7 @@ namespace :recipe do
   
     db_recipes = Recipe.all
 
-  # Add / Update found recipes
+    # Add / Update found recipes
     repo_recipes.each do |repo_attributes|
       db_known = db_recipes.find_by(name: repo_attributes[:name], version: repo_attributes[:version])
       if db_recipes.count == 0 || !db_known
@@ -95,8 +95,8 @@ namespace :recipe do
       end
     end
 
-  # Murder all orphans (recipes that were erased from git repos)
-  # We get creative here and map name-version then subtract repo from db
+    # Murder all orphans (recipes that were erased from git repos)
+    # We get creative here and map name-version then subtract repo from db
     db_hashmap = Hash[db_recipes.map { |x| ["#{x.name}-#{x.version}"] }]
     fs_hashmap = Hash[repo_recipes.map { |x| ["#{x[:name]}-#{x[:version]}"] }]
 
