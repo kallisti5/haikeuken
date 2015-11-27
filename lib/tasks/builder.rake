@@ -1,6 +1,6 @@
 namespace :builder do
   desc "Provision a new builder"
-  task :new, [:hostname, :location, :owner] => :environment do |task, args|
+  task :new, [:hostname, :location, :owner] => :environment do |_task, args|
     token = rand(36**64).to_s(36)
     Builder.create(hostname: args.hostname, token: token, owner: args.owner, location: args.location)
     puts "general:"
@@ -12,7 +12,7 @@ namespace :builder do
   end
 
   desc "Destroy a builder"
-  task :destroy, [:hostname] => :environment do |task, args|
+  task :destroy, [:hostname] => :environment do |_task, args|
     Builder.find_by(hostname: args.hostname).destroy
   end
 end

@@ -62,7 +62,7 @@ namespace :recipe do
 			category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
 
 			if !category_info
-				puts "Error! Unknown category for #{file.to_s}\n"
+				puts "Error! Unknown category for #{file}\n"
 				next
 			end
 

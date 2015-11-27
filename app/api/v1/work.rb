@@ -4,7 +4,7 @@ module V1
 	params do
       requires :hostname, type: String
       requires :token, type: String
-    end
+ end
 	# http://localhost:9292/api/v1/work/test?token=123
     # XXX: This should be a post
     get '/work/:hostname' do

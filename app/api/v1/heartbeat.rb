@@ -19,6 +19,6 @@ module V1
       # TODO: If architecture changes, raise event?
       # TODO: If osbuild changes, raise event?
       builder.update(lastheard: Time.now, osbuild: params[:revision], architecture_id: arch[:id])
-	end
+    end
   end
 end
