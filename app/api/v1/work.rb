@@ -41,9 +41,9 @@ module V1
         workitems.push(task)
       end
       if workitems.count > 0
-        return {'result' => 'available', 'tasks' => workitems}
+        return { 'result' => 'available', 'tasks' => workitems }
       else
-        return {'result' => 'none'}
+        return { 'result' => 'none' }
       end
     end
   end

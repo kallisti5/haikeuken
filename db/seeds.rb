@@ -6,5 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Architecture.create([{ name: 'x86' }, { name: 'x86_64' }, { name: 'x86_gcc2' }, { name: 'arm' }, { name: 'ppc'}])
+Architecture.create([{ name: 'x86' }, { name: 'x86_64' }, { name: 'x86_gcc2' }, { name: 'arm' }, { name: 'ppc' }])
 Repo.create([{ name: 'Haikuports', url: 'http://packages.haiku-os.org/haikuports/master/repo' }])
