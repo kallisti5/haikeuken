@@ -24,11 +24,11 @@ class BuildersController < ApplicationController
       return
     end
 
-    @builder.update(:lastheard => Time.now)
+    @builder.update(lastheard: Time.now)
 	build = Build.find(params[:build_id])
-	build.update(:completed => Time.now,
-		:status => (params[:status] == "OK") ? "Success" : "Failure",
-		:result => params[:result])
+	build.update(completed: Time.now,
+		status: (params[:status] == "OK") ? "Success" : "Failure",
+		result: params[:result])
 
 	redirect_to "/"
   end
@@ -41,7 +41,7 @@ class BuildersController < ApplicationController
       return
     end
 
-    @builder.update(:lastheard => Time.now)
+    @builder.update(lastheard: Time.now)
 
     workitems = []
     Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: @builder.architecture).each do |package|
@@ -59,11 +59,11 @@ class BuildersController < ApplicationController
       # last seen built revision is outdated
       # add work to tasks
       task = {
-		:id => build[:id],
-        :name => package.recipe[:name],
-        :version => package.recipe[:version],
-        :revision => package.recipe[:revision],
-        :architecture => @builder.architecture[:name]
+		id: build[:id],
+        name: package.recipe[:name],
+        version: package.recipe[:version],
+        revision: package.recipe[:revision],
+        architecture: @builder.architecture[:name]
       }
       workitems.push(task)
     end

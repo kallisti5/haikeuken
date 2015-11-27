@@ -27,11 +27,11 @@ namespace :package do
 						rev -= 1
 					end
 					attributes = {
-						:recipe_id => recipe[:id],
-						:repo_id => repo[:id],
-						:architecture_id => arch[:id],
-						:latestrev => rev,
-						:path => nil
+						recipe_id: recipe[:id],
+						repo_id: repo[:id],
+						architecture_id: arch[:id],
+						latestrev: rev,
+						path: nil
 					}
 					@package_new = Package.new(attributes)
 					@package_new.save

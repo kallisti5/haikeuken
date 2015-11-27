@@ -14,7 +14,7 @@ module V1
         error!('401 Unauthorized', 401)
       end
 
-      builder.update(:lastheard => Time.now)
+      builder.update(lastheard: Time.now)
 
       workitems = Array.new
       Package.joins(:recipe).where("packages.latestrev < recipes.revision").where(architecture: builder.architecture).each do |package|
@@ -32,11 +32,11 @@ module V1
         # last seen built revision is outdated
         # add work to tasks
         task = {
-          :id => build[:id],
-          :name => package.recipe[:name],
-          :version => package.recipe[:version],
-          :revision => package.recipe[:revision],
-          :architecture => builder.architecture[:name]
+          id: build[:id],
+          name: package.recipe[:name],
+          version: package.recipe[:version],
+          revision: package.recipe[:revision],
+          architecture: builder.architecture[:name]
         }
         workitems.push(task)
       end

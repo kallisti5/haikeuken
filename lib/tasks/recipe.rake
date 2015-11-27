@@ -25,7 +25,7 @@ namespace :recipe do
 	rescue
 		puts "No cached port repo found, cloning..."
 		haikuports = Git.clone(Rails.application.config.haikuports,
-			"#{Rails.root.join("tmp")}/repos/ports.git", :bare => false)
+			"#{Rails.root.join("tmp")}/repos/ports.git", bare: false)
 	end
 	puts "Pulling upstream port updates..."
 	haikuports.remote("origin").fetch
@@ -37,7 +37,7 @@ namespace :recipe do
 	rescue
 		puts "No cached porter repo found, cloning..."
 		haikuporter = Git.clone(Rails.application.config.haikuporter,
-			"#{Rails.root.join("tmp")}/repos/porter.git", :bare => false)
+			"#{Rails.root.join("tmp")}/repos/porter.git", bare: false)
 	end
 	puts "Pulling port tool updates..."
 	haikuporter.remote("origin").fetch
@@ -55,7 +55,7 @@ namespace :recipe do
 			revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
 			revision_info = /^REVISION\s?=\s?\"?(?<value>\d+)\"\s*$/.match(revision_line)
 			if revision_info == nil
-				revision_info = { :value => 0 }
+				revision_info = { value: 0 }
 			end
 	
 			file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", "")
@@ -67,11 +67,11 @@ namespace :recipe do
 			end
 
 			recipe = {
-				:name => name_info[:name],
-				:version => name_info[:version],
-				:revision => revision_info[:value].to_i,
-				:filename => file,
-				:category => category_info[:category],
+				name: name_info[:name],
+				version: name_info[:version],
+				revision: revision_info[:value].to_i,
+				filename: file,
+				category: category_info[:category],
 			}
 			repo_recipes.push(recipe)
 	        end
