@@ -50,37 +50,37 @@ namespace :recipe do
       file_name = File.basename(path_file)
       if file_name =~ /^.*-.*\.recipe$/
         recipe_file = File.basename(path_file, '.recipe')
-          name_info = /^(?<name>\S*)-(?<version>.*)$/.match(recipe_file)
+        name_info = /^(?<name>\S*)-(?<version>.*)$/.match(recipe_file)
   
-          revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
-          revision_info = /^REVISION\s?=\s?\"?(?<value>\d+)\"\s*$/.match(revision_line)
-          if revision_info == nil
-            revision_info = { value: 0 }
-          end
+        revision_line = File.readlines(path_file).select{|l| l.match /^REVISION=/}.last
+        revision_info = /^REVISION\s?=\s?\"?(?<value>\d+)\"\s*$/.match(revision_line)
+        if revision_info == nil
+          revision_info = { value: 0 }
+        end
     
-          file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", '')
-          category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
+        file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", '')
+        category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
   
-          if !category_info
-            puts "Error! Unknown category for #{file}\n"
-            next
-          end
+        if !category_info
+          puts "Error! Unknown category for #{file}\n"
+          next
+        end
   
-          recipe = {
-            name: name_info[:name],
-            version: name_info[:version],
-            revision: revision_info[:value].to_i,
-            filename: file,
-            category: category_info[:category],
-          }
-          repo_recipes.push(recipe)
+        recipe = {
+          name: name_info[:name],
+          version: name_info[:version],
+          revision: revision_info[:value].to_i,
+          filename: file,
+          category: category_info[:category],
+        }
+        repo_recipes.push(recipe)
             end
     end
   
     db_recipes = Recipe.all
 
   # Add / Update found recipes
-    repo_recipes.each do | repo_attributes |
+    repo_recipes.each do |repo_attributes|
       db_known = db_recipes.find_by(name: repo_attributes[:name], version: repo_attributes[:version])
       if db_recipes.count == 0 || !db_known
         puts "Add new recipe #{repo_attributes[:name]}-#{repo_attributes[:version]}-#{repo_attributes[:revision]}"
@@ -102,7 +102,7 @@ namespace :recipe do
 
     orphan_recipes = db_hashmap.keys - fs_hashmap.keys
 
-    orphan_recipes.each do | orphan |
+    orphan_recipes.each do |orphan|
       puts "Removing orphan recipe #{orphan}..."
       info = orphan.split('-')
       Recipe.destroy_all(name: info[0], version:  info[1])
@@ -113,23 +113,23 @@ namespace :recipe do
   desc 'Performs a lint scan of the current recipes'
   task lint: :environment do
     puts '================================'
-  puts 'Running lint on recipies'
-  puts '================================'
-  puts "Repo: #{Rails.application.config.haikuports}"
-  puts "Porter: #{Rails.application.config.haikuporter}"
+    puts 'Running lint on recipies'
+    puts '================================'
+    puts "Repo: #{Rails.application.config.haikuports}"
+    puts "Porter: #{Rails.application.config.haikuporter}"
 
-  require 'open4'
-  @recipes = Recipe.all
-  @recipes.each do |recipe|
-    puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
+    require 'open4'
+    @recipes = Recipe.all
+    @recipes.each do |recipe|
+      puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
       pid, stdin, stdout, stderr = Open4.popen4("#{Rails.root.join("tmp")}/repos/porter.git/haikuporter" \
           " --config=#{Rails.root.join("tmp")}/ports.conf" \
           " --lint #{recipe[:name]}-#{recipe[:version]}")
       ignored, status = Process::waitpid2 pid
-
+  
       recipe.update(lintret: status.to_i)
       recipe.update(lint: stdout.read.strip.gsub(/\n/, '<br>'))
-  end
+    end
   end
 
   desc 'Empties the applicaions database of recipes'
