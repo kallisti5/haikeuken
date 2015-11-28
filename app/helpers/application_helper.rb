@@ -41,4 +41,21 @@ module ApplicationHelper
       return image_tag "fc#{size}/accept_button.png", :data => tooltip
     end
   end
+
+  def builder_icon(builder, size = 16)
+    if !builder.lastheard
+      return image_tag "fc#{size}/server_add.png"
+    end
+
+    age = Time.now.to_i - builder.lastheard.to_i
+    if age > 90
+      return image_tag "fc#{size}/server_error.png"
+    end
+
+    if builder.busy
+      return image_tag "fc#{size}/server_lightning.png"
+    end
+
+    return image_tag "fc#{size}/server.png"
+  end
 end

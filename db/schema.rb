@@ -11,69 +11,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824202733) do
+ActiveRecord::Schema.define(version: 20151128210559) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'architectures', force: :cascade do |t|
-    t.string   'name'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
+  create_table "architectures", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table 'builders', force: :cascade do |t|
-    t.integer  'architecture_id'
-    t.string   'hostname'
-    t.string   'owner'
-    t.string   'location'
-    t.datetime 'lastheard'
-    t.string   'token'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.string   'osbuild'
+  create_table "builders", force: :cascade do |t|
+    t.integer  "architecture_id"
+    t.string   "hostname"
+    t.string   "owner"
+    t.string   "location"
+    t.datetime "lastheard"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "osbuild"
+    t.integer  "threads"
+    t.string   "client_version"
   end
 
-  create_table 'builds', force: :cascade do |t|
-    t.integer  'architecture_id'
-    t.integer  'builder_id'
-    t.integer  'recipe_id'
-    t.datetime 'issued'
-    t.datetime 'completed'
-    t.text     'result'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.string   'status'
+  create_table "builds", force: :cascade do |t|
+    t.integer  "architecture_id"
+    t.integer  "builder_id"
+    t.integer  "recipe_id"
+    t.datetime "issued"
+    t.datetime "completed"
+    t.text     "result"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status"
+    t.boolean  "active"
   end
 
-  create_table 'packages', force: :cascade do |t|
-    t.integer  'recipe_id'
-    t.integer  'repo_id'
-    t.integer  'architecture_id'
-    t.integer  'latestrev'
-    t.string   'path'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
+  create_table "packages", force: :cascade do |t|
+    t.integer  "recipe_id"
+    t.integer  "repo_id"
+    t.integer  "architecture_id"
+    t.integer  "latestrev"
+    t.string   "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table 'recipes', force: :cascade do |t|
-    t.string   'name'
-    t.string   'version'
-    t.integer  'revision'
-    t.string   'filename'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.string   'category'
-    t.text     'lint'
-    t.integer  'lintret'
+  create_table "recipes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "version"
+    t.integer  "revision"
+    t.string   "filename"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "category"
+    t.text     "lint"
+    t.integer  "lintret"
   end
 
-  create_table 'repos', force: :cascade do |t|
-    t.string   'name'
-    t.string   'url'
-    t.datetime 'lastrefresh'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
+  create_table "repos", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "lastrefresh"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

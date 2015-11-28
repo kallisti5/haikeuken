@@ -8,6 +8,7 @@ module V1
       requires :revision, type: String
       requires :platform, type: String
       requires :version, type: String
+      requires :threads, type: Integer
       #requires :uptime, type: String
     end
     post '/heartbeat/:hostname' do
@@ -18,7 +19,9 @@ module V1
       arch = Architecture.find_by(name: params[:architecture])
       # TODO: If architecture changes, raise event?
       # TODO: If osbuild changes, raise event?
-      builder.update(lastheard: Time.now, osbuild: params[:revision], architecture_id: arch[:id])
+      builder.update(lastheard: Time.now, osbuild: params[:revision],
+        architecture_id: arch[:id], threads: params[:threads].to_i,
+        client_version: params[:version])
     end
   end
 end

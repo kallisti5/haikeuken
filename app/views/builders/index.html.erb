@@ -11,23 +11,25 @@
       <th>Hostname</th>
       <th>Architecture</th>
       <th>OS Build</th>
+      <th>Client Version</th>
+      <th>Threads</th>
       <th>Owner</th>
       <th>Location</th>
-      <th>Last seen</th>
+      <th>State</th>
     </tr>
   </thead>
 
   <tbody>
     <% @builders.each do |builder| %>
       <tr>
-        <td><%= link_to builder.hostname, builder %></td>
+        <td><%=raw builder_icon(builder) %> <%= link_to builder.hostname, builder %></td>
         <td><%= (builder.architecture ? builder.architecture['name'] : "unknown")%></td>
         <td><%= (builder.osbuild or "unknown") %></td>
+        <td><%= (builder.client_version or "unknown") %></td>
+        <td><%= (builder.threads or "unknown") %></td>
         <td><%= builder.owner.gsub(/.{2}@.{2}/, '##@##') %></td>
         <td><%= link_to builder.location, "https://maps.google.com/maps?q=#{builder.location}", :target => "_blank" %></td>
-        <% age = Time.now.to_i - builder.lastheard.to_i %>
-        <td style="background-color: <%= (age >= 21600) ? "#FF9999" : "#CCFF99" %>">
-        <%= builder.lastheard ? time_ago_in_words(builder.lastheard) : "never" %></td>
+        <td><%=raw heartbeat_info(builder) %></td>
       </tr>
     <% end %>
   </tbody>
