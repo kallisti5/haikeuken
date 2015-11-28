@@ -33,32 +33,17 @@
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
         <td><%= image_tag "icons/" + (recipe['lintret'] == 0 ? "tick-circle-frame.png" : "exclamation-red-frame.png") %></td>
-		<% if recipe.packages.count < @architectures.count %>
-			<% @architectures.each do |arch| %>
-				<td><%= image_tag "icons/working-bar.gif" %></td>
-			<% end %>
-		<% else %>
-			<% recipe.packages.each do | package | %>
-				<% hpkgname = "#{recipe['name']}-#{recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
-				<% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
-				<% age = recipe.revision - package.latestrev %>
-				<% if package.latestrev == 0 %>
-					<td><%= image_tag "icons/box-missing.png" %></td>
-				<% elsif age == 0 %>
-					<td><%= link_to image_tag("icons/box-exists.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
-				<% elsif age <= 4 %>
-					<td><%= link_to image_tag("icons/box-outdated.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
-				<% else %>
-					<td><%= link_to image_tag("icons/box-outdated2.png", :alt => age.to_s), "#{repo}/#{hpkgname}" %></td>
-				<% end %>
-			<% end %>
+		<% @architectures.each do |arch| %>
+			<% package = recipe.packages.where(architecture_id: arch.id).first %>
+            <td><%= package_icon(package) %></td>
 		<% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 </center>
+
 <%= page_entries_info @recipes %>
-<%= paginate @recipes %>
+<%= will_paginate @recipes, renderer: BootstrapPagination::Rails %>
 
 <br>

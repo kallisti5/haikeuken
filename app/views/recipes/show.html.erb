@@ -39,19 +39,9 @@
           <tbody>
   		    <tr>
   		      <% @recipe.packages.joins(:architecture).each do | package | %>
-  		        <% hpkgname = "#{@recipe['name']}-#{@recipe['version']}-#{package.latestrev}-#{package.architecture['name']}.hpkg" %>
-  		        <% repo = "#{package.repo['url']}/#{package.architecture['name']}/current/packages" %>
-  		        <td style="text-align: center;">
-  		        <% if package.latestrev == 0 %>
-  		        	<%= image_tag "icons/box-missing.png" %>
-  		        	<br/>N/A
-  		        <% elsif package.latestrev == @recipe.revision %>
-  		        	<%= link_to image_tag("icons/box-exists.png"), "#{repo}/#{hpkgname}" %>
-  		        	<br/>Revision <%= package.latestrev %>
-  		        <% else %>
-  		        	<%= link_to image_tag("icons/box-outdated.png"), "#{repo}/#{hpkgname}" %>
-  		        	<br/>Revision <%= package.latestrev %>
-  		        <% end %>
+                <td style="text-align: center;"><%= package_icon(package, 32) %><br/>
+  		        <span style='font-size: 0.8em;'><%= (package.latestrev != 0 ? package.latestrev : "none") %></span>
+				</td>
   		        </td>
   		      <%-end-%>
   		    </tr>

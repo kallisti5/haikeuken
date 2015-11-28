@@ -1,10 +1,11 @@
 class RecipesController < ApplicationController
+  per_page = 10
   before_action :set_recipe, only: [:show]
 
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.includes(packages: [:repo, :architecture]).search(params[:search]).page(params[:page])
+    @recipes = Recipe.search(params[:search]).includes(packages: [:repo, :architecture]).page(params[:page])
     @architectures = Architecture.all
   end
 

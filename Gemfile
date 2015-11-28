@@ -22,7 +22,7 @@ gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 
 # Pages n' stuff
-gem 'kaminari'
+#gem 'kaminari'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -46,7 +46,8 @@ gem 'open4'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Paginate
-#gem 'will_paginate'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 # Puma middleware
 gem 'puma'

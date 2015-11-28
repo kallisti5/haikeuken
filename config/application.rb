@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+WillPaginate.per_page = 20
+
 module Hpbs
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
