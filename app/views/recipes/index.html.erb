@@ -32,7 +32,7 @@
         <td><%= recipe.category %></td>
         <td><%= recipe.version %></td>
         <td><%= recipe.revision %></td>
-        <td><%= image_tag "icons/" + (recipe['lintret'] == 0 ? "tick-circle-frame.png" : "exclamation-red-frame.png") %></td>
+        <td><%= lint_icon(recipe) %></td>
 		<% @architectures.each do |arch| %>
 			<% package = recipe.packages.where(architecture_id: arch.id).first %>
             <td><%= package_icon(package) %></td>
