@@ -7,7 +7,7 @@ namespace :builder do
     puts "  work_path: \"/boot/home/build\""
     puts "  token: \"#{token}\""
     puts "  hostname: \"#{args.hostname}\""
-    puts 'sever:'
+    puts 'server:'
     puts "  url: \"SETME\""
   end
 
