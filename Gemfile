@@ -21,9 +21,6 @@ gem 'hashie-forbidden_attributes'
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 
-# Pages n' stuff
-#gem 'kaminari'
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

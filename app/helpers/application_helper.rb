@@ -33,7 +33,7 @@ module ApplicationHelper
       tooltip = { :toggle => "tooltip", :placement => placement, :title => "No lint available" }
       return image_tag "fc#{size}/emotion_question.png", :data => tooltip
     end
-    if recipe['lintret'] == 0
+    if recipe['lintret'] != 0
       tooltip = { :toggle => "tooltip", :placement => placement, :title => "Problems found" }
       return image_tag "fc#{size}/exclamation.png", :data => tooltip
     else

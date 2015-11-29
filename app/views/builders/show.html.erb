@@ -1,48 +1,77 @@
 <p id="notice"><%= notice %></p>
 
-<div class="title">
-  <span id="major"><%=@builder.hostname %></span><br/>
-  <span id="minor"><%=@builder.architecture ? @builder.architecture.name : "unknown" %> package builder owned by <%=@builder.owner%></span>
+<div class='row'>
+  <div class='col-md-12'>
+    <span style="font-size: 1.5em; font-weight: bold;"><%= builder_icon(@builder, 32) %> <%=@builder.hostname %></span> (<%=raw heartbeat_info(@builder) %>)
+  </div>
+</div> <!-- row -->
+
+<br/>
+
+<div class='row'>
+  <div class='col-md-8'>
+    <div class="panel panel-default">
+    <div class="panel-heading">Builder Info</div>
+    <div class="panel-body">
+    <table class="table table-striped table-condensed table-hover" style='width: 100%;'>
+        <tr><td><b>OS Build</b></td><td><%= @builder.osbuild ? (link_to @builder.osbuild, "http://cgit.haiku-os.org/haiku/tag/?id=#{@builder.osbuild}") : "unknown" %></td></tr>
+        <tr><td><b>Architecture</b></td><td><%= @builder.architecture ? @builder.architecture.name : "unknown" %></td></tr>
+        <tr><td><b>CPUs</b></td><td><%= @builder.threads ? @builder.threads : "unknown" %></td></tr>
+        <tr><td><b>Owner</b></td><td><%= @builder.owner ? @builder.owner : "unknown" %></td></tr>
+        <tr><td><b>Last heartbeat</b></td><td><%= @builder.lastheard ? "#{time_ago_in_words(@builder.lastheard)} ago" : "never" %></td></tr>
+    </table>
+    </div>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class="panel panel-default">
+    <div class="panel-heading">Location</div>
+    <div class="panel-body">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=3&size=275x125">
+    </div>
+    </div>
+  </div>
 </div>
 
-<img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=4&size=650x200">
-<p>
-  <strong>Last seen:</strong>
-  <%= @builder.lastheard ? "#{time_ago_in_words(@builder.lastheard)} ago" : "never" %>
-</p>
-
-<p>
-  <h3>Recent package builds:</h3>
-<br/>
-<table class="table table-striped table-hover table-condensed" style='width: 100%;'>
-  <thead>
-    <tr>
-      <th>Recipe</th>
-      <th>Version</th>
-      <th>Revision</th>
-      <th>Issued</th>
-      <th>Completed</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% if @builder.builds.count == 0 %>
-      <tr><td COLSPAN=6><i>No known builds</i></td></tr>
-    <% end %>
-    <% @builder.builds.order('issued DESC').first(10).each do |build| %>
-      <tr>
-        <td><%= link_to build.recipe['name'], build.recipe %></td>
-        <td><%= build.recipe['version'] %></td>
-        <td><%= build.recipe['revision'] %></td>
-        <td><%= build.issued %></td>
-        <td><%= build.completed ? build.completed : "never" %></td>
-        <td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</p>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class="panel panel-default">
+    <div class="panel-heading">Recent builds</div>
+    <div class="panel-body">
+    <table class="table table-striped table-hover table-condensed" style='width: 100%;'>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Recipe</th>
+          <th>Version</th>
+          <th>Revision</th>
+          <th>Issued</th>
+          <th>Completed</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% if @builder.builds.count == 0 %>
+          <tr><td COLSPAN=6><i>No known builds</i></td></tr>
+        <% end %>
+        <% @builder.builds.order('issued DESC').first(10).each do |build| %>
+          <tr>
+            <td><%= link_to "##{build.id}", build %></td>
+            <td><%= link_to build.recipe['name'], build.recipe %></td>
+            <td><%= build.recipe['version'] %></td>
+            <td><%= build.recipe['revision'] %></td>
+            <td><%= build.issued %></td>
+            <td><%= build.completed ? build.completed : "never" %></td>
+            <td><%=raw build_state(build) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    </div>
+  </div>
+</div>
 
 
 <%= link_to 'Back', builders_path %>

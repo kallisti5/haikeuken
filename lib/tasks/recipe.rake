@@ -122,11 +122,13 @@ namespace :recipe do
     @recipes = Recipe.all
     @recipes.each do |recipe|
       puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
-      pid, stdin, stdout, stderr = Open4.popen4("#{Rails.root.join("tmp")}/repos/porter.git/haikuporter" \
-          " --config=#{Rails.root.join("tmp")}/ports.conf" \
-          " --lint #{recipe[:name]}-#{recipe[:version]}")
+      pid, stdin, stdout, stderr = Open4.popen4("/usr/bin/python2 " \
+          "#{Rails.root.join("tmp")}/repos/porter.git/haikuporter " \
+          "--config=#{Rails.root.join("tmp")}/ports.conf " \
+          "--lint #{recipe[:name]}-#{recipe[:version]}")
       ignored, status = Process::waitpid2 pid
   
+      puts stderr.read.strip
       recipe.update(lintret: status.to_i)
       recipe.update(lint: stdout.read.strip.gsub(/\n/, '<br>'))
     end

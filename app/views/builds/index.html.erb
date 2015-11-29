@@ -9,6 +9,7 @@
 <table class="table table-striped table-hover table-condensed" style='width: 100%;'>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Architecture</th>
       <th>Builder</th>
       <th>Recipe</th>
@@ -23,6 +24,7 @@
   <tbody>
     <% @builds.each do |build| %>
       <tr>
+        <td><%= link_to "##{build.id}", build %></td>
         <td><%= build.architecture['name'] %></td>
         <td><%= link_to build.builder['hostname'], build.builder %></td>
         <td><%= link_to build.recipe['name'], build.recipe %></td>
@@ -30,7 +32,7 @@
         <td><%= build.recipe['revision'] %></td>
         <td><%= build.issued %></td>
         <td><%= build.completed ? build.completed : "never" %></td>
-		<td><%= image_tag "icons/#{build.status.downcase}.png" %> <%= link_to build.status, build %></td>
+        <td><%=raw build_state(build) %></td>
       </tr>
     <% end %>
   </tbody>
