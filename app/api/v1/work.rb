@@ -26,7 +26,7 @@ module V1
       if builder.busy
         build = builder.last_build
       else
-        package = Package.joins(:recipe).where('packages.latestrev < recipes.revision').where(architecture: builder.architecture).first
+        package = Package.joins(:recipe).where('packages.latestrev < recipes.revision').where(architecture: builder.architecture).order("RANDOM()").first
 
         if package
           # Schedule the build for this builder
