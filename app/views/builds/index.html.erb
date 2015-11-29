@@ -38,4 +38,5 @@
   </tbody>
 </table>
 
-<br>
+<%= page_entries_info @builds %>
+<%= will_paginate @builds, renderer: BootstrapPagination::Rails %>
