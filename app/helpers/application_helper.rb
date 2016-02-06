@@ -1,5 +1,6 @@
 module ApplicationHelper
   def package_icon(package, size = 16)
+    placement = (size == 16) ? "left" : "bottom"
     if !package
       tooltip = { :toggle => "tooltip", :placement => placement, :title => "Scanning..." }
       return image_tag "icons/working-bar.gif", :data => tooltip
