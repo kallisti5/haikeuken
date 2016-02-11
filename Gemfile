@@ -65,3 +65,7 @@ gem 'git'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+
+group :development do
+  gem "rails-erd"
+end

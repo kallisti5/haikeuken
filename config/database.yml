@@ -1,7 +1,8 @@
 development:
   adapter: postgresql
   database: rails
-  username: rails
+  username: haikeuken
+  password: c2_sux
   host: 127.0.0.1
   port: 5432
   pool: 5

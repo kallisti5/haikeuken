@@ -1,6 +1,7 @@
 class Recipe < ActiveRecord::Base
   has_many :packages
   has_many :builds
+  has_many :architectures, through: :packages
 
   def self.search(search)
     if search
