@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824202733) do
+ActiveRecord::Schema.define(version: 20151129013036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "osbuild"
+    t.integer  "threads"
+    t.string   "client_version"
   end
 
   create_table "builds", force: :cascade do |t|
@@ -40,10 +42,12 @@ ActiveRecord::Schema.define(version: 20150824202733) do
     t.integer  "recipe_id"
     t.datetime "issued"
     t.datetime "completed"
-    t.text     "result"
+    t.text     "details"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
+    t.boolean  "active"
+    t.integer  "asset_id"
+    t.integer  "result"
   end
 
   create_table "packages", force: :cascade do |t|
