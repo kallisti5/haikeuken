@@ -20,9 +20,9 @@ namespace :package do
           while rev.to_i > 0
             hpkgname = "#{recipe['name']}-#{recipe['version']}-#{rev}-#{arch['name']}.hpkg"
             puts "#{path}/#{hpkgname}"
-            response = Net::HTTP.start(url.host, url.port) do |http|
-              http.request_head("#{path}/#{hpkgname}")
-            end
+            http = Net::HTTP.new(url.host, url.port)
+            http.use_ssl = true if url.scheme == 'https'
+            response = http.request_head("#{path}/#{hpkgname}")
             break if response.code.to_i == 200
             rev -= 1
           end
