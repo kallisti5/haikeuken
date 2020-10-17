@@ -22,4 +22,4 @@ fi;
 export DATABASE_URL;
 
 cd $APP_PATH
-bundle exec puma -p 3000 -d
+bundle exec puma -p 3000
