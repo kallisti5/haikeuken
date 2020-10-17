@@ -1,4 +1,4 @@
-class BuildCleanup < ActiveRecord::Migration
+class BuildCleanup < ActiveRecord::Migration[5.1]
   def change
     remove_column :builds, :status
     add_column :builds, :successful, :boolean

@@ -1,4 +1,4 @@
-class CreateBuilders < ActiveRecord::Migration
+class CreateBuilders < ActiveRecord::Migration[5.1]
   def change
     create_table :builders do |t|
       t.integer :architecture_id

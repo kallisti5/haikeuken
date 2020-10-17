@@ -1,4 +1,4 @@
-class AddStatusToBuilds < ActiveRecord::Migration
+class AddStatusToBuilds < ActiveRecord::Migration[5.1]
   def change
     add_column :builds, :status, :string
   end

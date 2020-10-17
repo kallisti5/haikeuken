@@ -16,67 +16,67 @@ ActiveRecord::Schema.define(version: 20151129013036) do
   enable_extension "plpgsql"
 
   create_table "architectures", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "builders", force: :cascade do |t|
-    t.integer  "architecture_id"
-    t.string   "hostname"
-    t.string   "owner"
-    t.string   "location"
+    t.integer "architecture_id"
+    t.string "hostname"
+    t.string "owner"
+    t.string "location"
     t.datetime "lastheard"
-    t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "osbuild"
-    t.integer  "threads"
-    t.string   "client_version"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "osbuild"
+    t.integer "threads"
+    t.string "client_version"
   end
 
   create_table "builds", force: :cascade do |t|
-    t.integer  "architecture_id"
-    t.integer  "builder_id"
-    t.integer  "recipe_id"
+    t.integer "architecture_id"
+    t.integer "builder_id"
+    t.integer "recipe_id"
     t.datetime "issued"
     t.datetime "completed"
-    t.text     "details"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "active"
-    t.integer  "asset_id"
-    t.integer  "result"
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active"
+    t.integer "asset_id"
+    t.integer "result"
   end
 
   create_table "packages", force: :cascade do |t|
-    t.integer  "recipe_id"
-    t.integer  "repo_id"
-    t.integer  "architecture_id"
-    t.integer  "latestrev"
-    t.string   "path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "recipe_id"
+    t.integer "repo_id"
+    t.integer "architecture_id"
+    t.integer "latestrev"
+    t.string "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "recipes", force: :cascade do |t|
-    t.string   "name"
-    t.string   "version"
-    t.integer  "revision"
-    t.string   "filename"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "category"
-    t.text     "lint"
-    t.integer  "lintret"
+    t.string "name"
+    t.string "version"
+    t.integer "revision"
+    t.string "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "category"
+    t.text "lint"
+    t.integer "lintret"
   end
 
   create_table "repos", force: :cascade do |t|
-    t.string   "name"
-    t.string   "url"
+    t.string "name"
+    t.string "url"
     t.datetime "lastrefresh"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
