@@ -19,3 +19,5 @@
 !/tmp/.keep
 !/tmp/pids
 !/tmp/pids/.keep
+
+/config/master.key
