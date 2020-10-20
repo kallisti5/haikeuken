@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-	echo "usage: $0 [app|assets]"
+	echo "usage: $0 [app|assets|recipe_sync|package_sync]"
 	exit 1
 fi
 
@@ -10,11 +10,11 @@ echo "Booting up Rails $COMPONENT at $RAILS_ROOT"
 
 cd $RAILS_ROOT
 
-if [ $COMPONENT == "app" ]; then
+if [ "$COMPONENT" == "app" ]; then
 	bundle exec rake db:create
 	bundle exec rake db:migrate
 	bundle exec puma -C config/puma.rb
-else
+elif [ "$COMPONENT" == "assets" ]; then
 	rm /etc/nginx/sites-enabled/*
 cat <<EOF > /etc/nginx/conf.d/rails.conf
 server {
@@ -30,4 +30,14 @@ server {
 }
 EOF
 	nginx -g 'daemon off;'
+elif [ "$COMPONENT" == "recipe_sync" ]; then
+	echo "Running recipe sync..."
+	bundle exec rake recipe:sync
+	bundle exec rake recipe:lint
+elif [ "$COMPONENT" == "package_sync" ]; then
+	echo "Running repo sync..."
+	bundle exec rake package:sync
+else
+	echo "Unknown command: $COMPONENT"
+	exit 1
 fi
