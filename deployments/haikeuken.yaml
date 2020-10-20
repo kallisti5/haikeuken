@@ -86,3 +86,4 @@ spec:
             imagePullPolicy: Always
             image: quay.io/terarocket/haikeuken
             args: ["recipe_sync"]
+          restartPolicy: Never
