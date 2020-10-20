@@ -1,9 +1,33 @@
 #!/bin/bash
 
-echo "Booting up Rails app at $RAILS_ROOT"
+if [ $# -ne 1 ]; then
+	echo "usage: $0 [app|assets]"
+	exit 1
+fi
+
+export COMPONENT=$1
+echo "Booting up Rails $COMPONENT at $RAILS_ROOT"
 
 cd $RAILS_ROOT
 
-bundle exec rake db:create
-bundle exec rake db:migrate
-bundle exec puma -C config/puma.rb
+if [ $COMPONENT == "app" ]; then
+	bundle exec rake db:create
+	bundle exec rake db:migrate
+	bundle exec puma -C config/puma.rb
+else
+	rm /etc/nginx/sites-enabled/*
+cat <<EOF > /etc/nginx/conf.d/rails.conf
+server {
+	listen 80 default_server;
+        location ~ ^/(assets|packs)/ {
+		root $RAILS_ROOT/public;
+		gzip_static on;
+		expires 7d;
+		add_header Cache-Control public;
+		add_header Last-Modified "";
+		add_header ETag "";
+	}
+}
+EOF
+	nginx -g 'daemon off;'
+fi
