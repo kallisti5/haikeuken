@@ -70,3 +70,19 @@ spec:
             name: haikeuken-service
             port:
               number: 80
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: haikeuken-recipe-sync
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: haikeuken-recipe-sync
+            imagePullPolicy: Always
+            image: quay.io/terarocket/haikeuken
+            args: ["recipe_sync"]
