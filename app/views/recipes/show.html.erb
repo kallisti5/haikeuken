@@ -90,7 +90,7 @@
       <div class="panel-heading">Current Recipe</div>
       <div class="panel-body">
         <div class="CodeRay">
-        <pre><%=raw CodeRay.scan_file("#{Rails.root.join("tmp")}/repos/ports.git#{@recipe.filename}", :recipe).html %></pre>
+        <pre><%=raw CodeRay.scan_file("#{Rails.root.join("cache")}/repos/ports.git#{@recipe.filename}", :recipe).html %></pre>
         </div>
       </div>
     </div>
