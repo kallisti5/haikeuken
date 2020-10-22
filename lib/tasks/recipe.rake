@@ -3,12 +3,12 @@ namespace :recipe do
   task sync: :environment do
     require 'find'
 
-    porter_config = [ "TREE_PATH=\"#{Rails.root.join("tmp")}/repos/ports.git\"\n",
+    porter_config = [ "TREE_PATH=\"#{Rails.root.join("cache")}/repos/ports.git\"\n",
       "PACKAGER=\"Haiku Kitchen <admin@haikungfu.net>\"\n",
       "TARGET_ARCHITECTURE=\"x86\"\n",
       "LICENSES_DIRECTORY=\"#{Rails.root.join("public")}/licenses\"\n" ]
 
-    File.open("#{Rails.root.join("tmp")}/ports.conf", 'w') do |f|
+    File.open("#{Rails.root.join("cache")}/ports.conf", 'w') do |f|
       porter_config.each do |row| f << row end
     end
 
@@ -17,15 +17,15 @@ namespace :recipe do
     puts '================================'
     puts "Repo: #{Rails.application.config.haikuports}"
 
-    Dir.mkdir("#{Rails.root.join("tmp")}/repos") unless File.directory?("#{Rails.root.join("tmp")}/repos")
+    Dir.mkdir("#{Rails.root.join("cache")}/repos") unless File.directory?("#{Rails.root.join("cache")}/repos")
 
     puts 'Refreshing Haikuports tree...'
     begin
-      haikuports = Git.open("#{Rails.root.join("tmp")}/repos/ports.git")
+      haikuports = Git.open("#{Rails.root.join("cache")}/repos/ports.git")
     rescue
       puts 'No cached port repo found, cloning...'
       haikuports = Git.clone(Rails.application.config.haikuports,
-        "#{Rails.root.join("tmp")}/repos/ports.git", bare: false)
+        "#{Rails.root.join("cache")}/repos/ports.git", bare: false)
     end
     puts 'Pulling upstream port updates...'
     haikuports.remote('origin').fetch
@@ -33,11 +33,11 @@ namespace :recipe do
 
     puts 'Refreshing Haikuporter...'
     begin
-      haikuporter = Git.open("#{Rails.root.join("tmp")}/repos/porter.git")
+      haikuporter = Git.open("#{Rails.root.join("cache")}/repos/porter.git")
     rescue
       puts 'No cached porter repo found, cloning...'
       haikuporter = Git.clone(Rails.application.config.haikuporter,
-        "#{Rails.root.join("tmp")}/repos/porter.git", bare: false)
+        "#{Rails.root.join("cache")}/repos/porter.git", bare: false)
     end
     puts 'Pulling port tool updates...'
     haikuporter.remote('origin').fetch
@@ -58,7 +58,7 @@ namespace :recipe do
           revision_info = { value: 0 }
         end
     
-        file = path_file.gsub("#{Rails.root.join("tmp")}/repos/ports.git", '')
+        file = path_file.gsub("#{Rails.root.join("cache")}/repos/ports.git", '')
         category_info = /^\/(?<category>\S*)\/\S*\/\S*$/.match(file)
   
         if !category_info
@@ -123,8 +123,8 @@ namespace :recipe do
     @recipes.each do |recipe|
       puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
       pid, stdin, stdout, stderr = Open4.popen4("/usr/bin/python3 " \
-          "#{Rails.root.join("tmp")}/repos/porter.git/haikuporter " \
-          "--config=#{Rails.root.join("tmp")}/ports.conf " \
+          "#{Rails.root.join("cache")}/repos/porter.git/haikuporter " \
+          "--config=#{Rails.root.join("cache")}/ports.conf " \
           "--lint #{recipe[:name]}-#{recipe[:version]}")
       ignored, status = Process::waitpid2 pid
   
