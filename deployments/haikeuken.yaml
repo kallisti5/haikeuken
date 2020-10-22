@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: haikeuken-cache
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,6 +38,9 @@ spec:
           value: "radicalrascals"
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - mountPath: "/opt/app/tmp/cache
+          name: haikeuken-cache
       - name: haikeuken-assets
         imagePullPolicy: Always
         image: quay.io/terarocket/haikeuken
@@ -86,4 +101,7 @@ spec:
             imagePullPolicy: Always
             image: quay.io/terarocket/haikeuken
             args: ["recipe_sync"]
+            volumeMounts:
+            - mountPath: "/opt/app/tmp/cache
+              name: haikeuken-cache
           restartPolicy: Never
