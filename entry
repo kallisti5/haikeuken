@@ -32,10 +32,12 @@ EOF
 	nginx -g 'daemon off;'
 elif [ "$COMPONENT" == "recipe_sync" ]; then
 	echo "Running recipe sync..."
+	export SECRET_KEY_BASE=quackquack
 	bundle exec rake recipe:sync
 	bundle exec rake recipe:lint
 elif [ "$COMPONENT" == "package_sync" ]; then
 	echo "Running repo sync..."
+	export SECRET_KEY_BASE=quackquack
 	bundle exec rake package:sync
 else
 	echo "Unknown command: $COMPONENT"
