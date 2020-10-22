@@ -105,7 +105,7 @@ namespace :recipe do
     orphan_recipes.each do |orphan|
       puts "Removing orphan recipe #{orphan}..."
       info = orphan.split('-')
-      Recipe.destroy_all(name: info[0], version:  info[1])
+      Recipe.where(name: info[0], version:  info[1]).destroy_all
     end
 
   end
