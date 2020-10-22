@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: haikeuken-cache
+  name: haikeuken-cacheclaim
 spec:
   storageClassName: manual
   accessModes:
@@ -26,6 +26,10 @@ spec:
       labels:
         app: haikeuken
     spec:
+      volumes:
+      - name: haikeuken-cache
+        persistentVolumeClaim:
+          claimName: haikeuken-cacheclaim
       containers:
       - name: haikeuken
         imagePullPolicy: Always
@@ -39,7 +43,7 @@ spec:
         ports:
         - containerPort: 3000
         volumeMounts:
-        - mountPath: "/opt/app/tmp/cache
+        - mountPath: "/opt/app/tmp/cache"
           name: haikeuken-cache
       - name: haikeuken-assets
         imagePullPolicy: Always
@@ -96,12 +100,19 @@ spec:
     spec:
       template:
         spec:
+          volumes:
+          - name: haikeuken-cache
+            persistentVolumeClaim:
+              claimName: haikeuken-cacheclaim
           containers:
           - name: haikeuken-recipe-sync
             imagePullPolicy: Always
             image: quay.io/terarocket/haikeuken
             args: ["recipe_sync"]
+            env:
+            - name: DATABASE_URL
+              value: "postgresql://postgresadmin:admin123@postgres:5432/haikeuken"
             volumeMounts:
-            - mountPath: "/opt/app/tmp/cache
-              name: haikeuken-cache
+            - mountPath: "/opt/app/tmp/cache"
+              name: haikeuken-cacheclaim
           restartPolicy: Never
