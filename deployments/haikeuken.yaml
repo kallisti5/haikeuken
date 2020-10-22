@@ -43,7 +43,7 @@ spec:
         ports:
         - containerPort: 3000
         volumeMounts:
-        - mountPath: "/opt/app/tmp/cache"
+        - mountPath: "/opt/app/cache"
           name: haikeuken-cache
       - name: haikeuken-assets
         imagePullPolicy: Always
@@ -113,6 +113,6 @@ spec:
             - name: DATABASE_URL
               value: "postgresql://postgresadmin:admin123@postgres:5432/haikeuken"
             volumeMounts:
-            - mountPath: "/opt/app/tmp/cache"
+            - mountPath: "/opt/app/cache"
               name: haikeuken-cacheclaim
           restartPolicy: Never
