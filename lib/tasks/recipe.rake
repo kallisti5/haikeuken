@@ -122,7 +122,7 @@ namespace :recipe do
     @recipes = Recipe.all
     @recipes.each do |recipe|
       puts "Running lint on #{recipe[:name]}-#{recipe[:version]}-#{recipe[:revision]}"
-      pid, stdin, stdout, stderr = Open4.popen4("/usr/bin/python2 " \
+      pid, stdin, stdout, stderr = Open4.popen4("/usr/bin/python3 " \
           "#{Rails.root.join("tmp")}/repos/porter.git/haikuporter " \
           "--config=#{Rails.root.join("tmp")}/ports.conf " \
           "--lint #{recipe[:name]}-#{recipe[:version]}")
