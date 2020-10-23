@@ -27,7 +27,7 @@
     <div class="panel panel-default">
     <div class="panel-heading">Location</div>
     <div class="panel-body">
-    <img src="https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=3&size=275x125">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyDetzzNv9PoPMayN_2wKX6jWTKsd2RlsD4&markers=size:mid%7Ccolor:red%7C<%=@builder.location%>&zoom=3&size=275x125">
     </div>
     </div>
   </div>
@@ -50,7 +50,7 @@
           <th>Status</th>
         </tr>
       </thead>
-    
+
       <tbody>
         <% if @builder.builds.count == 0 %>
           <tr><td COLSPAN=6><i>No known builds</i></td></tr>
