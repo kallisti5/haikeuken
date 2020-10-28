@@ -5,7 +5,7 @@
   <h2>Build #<%= @build.id %></h2>
   </div>
 </div>
-    
+
 <div class='row'>
   <div class='col-md-12'>
     <div class="panel panel-default">
@@ -28,7 +28,7 @@
     <div class="panel panel-default">
     <div class="panel-heading">Results</div>
     <div class="panel-body">
-      <pre><%= @build.details.gsub(/\n/, '<br>').html_safe %></pre>
+      <div class="CodeRay"><pre><%= @build.details.gsub(/\n/, '<br>').html_safe %></pre></div>
     </div>
     </div>
   </div>
